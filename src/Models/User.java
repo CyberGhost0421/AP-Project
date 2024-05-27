@@ -1,22 +1,19 @@
 package Models;
 
-import java.sql.Date;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.sql.Date;
 
 public class User {
     @JsonProperty("id")
-    private String id;
-    @JsonProperty("token")
+    private String id;@JsonProperty("token")
     private String token;
     @JsonProperty("firstName")
     private String firstName;
-
     @JsonProperty("lastName")
     private String lastName;
-
     @JsonProperty("email")
     private String email;
-
     @JsonProperty("phoneNumber")
     private String phoneNumber;
     @JsonProperty("phoneNumberType")

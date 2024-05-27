@@ -8,8 +8,7 @@ import java.util.ArrayList;
 public class MessageDB {
     private final Connection connection;
 
-    public MessageDB() throws SQLException {
-
+    public MessageDB() throws SQLException {DatabaseMetaData DatabaseConnectionManager = null;
         connection = DatabaseConnectionManager.getConnection();
         createMessageTable();
     }

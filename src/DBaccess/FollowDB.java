@@ -1,15 +1,14 @@
 package DBaccess;
 import Models.Follow;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FollowDB {
     private final Connection connection;
     public FollowDB() throws SQLException {
+        DatabaseMetaData DatabaseConnectionManager = null;
         connection = DatabaseConnectionManager.getConnection();
         createFollowTable();
     }
