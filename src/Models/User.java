@@ -6,7 +6,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class User {
     @JsonProperty("id")
     private String id;
-
+    @JsonProperty("token")
+    private String token;
     @JsonProperty("firstName")
     private String firstName;
 
@@ -33,6 +34,7 @@ public class User {
 
     @JsonProperty("userCreatedAt")
     private Date userCreatedAt;
+
     @JsonProperty("socialLink")
     private String socialLink;
 
@@ -65,6 +67,14 @@ public class User {
 
     public User() {
 
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public String getId() {

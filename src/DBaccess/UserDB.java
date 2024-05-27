@@ -17,12 +17,12 @@ public class UserDB {
 
 
     public void createUserTable() throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS users (id VARCHAR(36) PRIMARY KEY, first_name VARCHAR(255), last_name VARCHAR(255), email VARCHAR(255), phoneNumberType VARCHAR(255) , phone_number VARCHAR(255), password VARCHAR(255), country VARCHAR(255) , city VARCHAR(255) , birthday DATE , socialLink VARCHAR(255) , created_at DATE)");
+        PreparedStatement statement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS users (id VARCHAR(36) PRIMARY KEY, first_name VARCHAR(255), last_name VARCHAR(255), email VARCHAR(255), phoneNumberType VARCHAR(255) , phone_number VARCHAR(255), password VARCHAR(255), country VARCHAR(255) , city VARCHAR(255) , birthday DATE , socialLink VARCHAR(255) , created_at DATE , token VARCHAR(255))");
         statement.executeUpdate();
     }
 
     public void saveUser(User user) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("INSERT INTO users (id, first_name, last_name, email, phoneNumberType ,phone_number, password, country,city, birthday,socialLink, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        PreparedStatement statement = connection.prepareStatement("INSERT INTO users (id, first_name, last_name, email, phoneNumberType ,phone_number, password, country,city, birthday,socialLink, created_at,token) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         statement.setString(1, user.getId());
         statement.setString(2, user.getFirstName());
         statement.setString(3, user.getLastName());
@@ -35,6 +35,8 @@ public class UserDB {
         statement.setDate(10, new java.sql.Date(user.getBirthday().getTime()));
         statement.setString(11, user.getSocialLink());
         statement.setDate(12, new java.sql.Date(user.getUserCreatedAt().getTime()));
+        statement.setString(13, user.getToken());
+
 
         statement.executeUpdate();
     }
@@ -75,6 +77,7 @@ public class UserDB {
         if (resultSet.next()) {
             User user = new User();
             user.setId(resultSet.getString("id"));
+            user.setToken(resultSet.getString("token"));
             user.setFirstName(resultSet.getString("first_name"));
             user.setLastName(resultSet.getString("last_name"));
             user.setEmail(resultSet.getString("email"));
@@ -100,6 +103,7 @@ public class UserDB {
         if (resultSet.next()) {
             User user = new User();
             user.setId(resultSet.getString("id"));
+            user.setToken(resultSet.getString("token"));
             user.setFirstName(resultSet.getString("first_name"));
             user.setLastName(resultSet.getString("last_name"));
             user.setEmail(resultSet.getString("email"));
@@ -125,6 +129,7 @@ public class UserDB {
         while (resultSet.next()) {
             User user = new User();
             user.setId(resultSet.getString("id"));
+            user.setToken(resultSet.getString("token"));
             user.setFirstName(resultSet.getString("first_name"));
             user.setLastName(resultSet.getString("last_name"));
             user.setEmail(resultSet.getString("email"));
