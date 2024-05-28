@@ -5,10 +5,10 @@ import java.sql.Date;
 import java.util.ArrayList;
 
 public class Post {
-    private static int TotalNumOfTweets;
+    private static int TotalNumOfPosts;
 
     static {
-        TotalNumOfTweets = 0;
+        TotalNumOfPosts = 0;
     }
     @JsonProperty("id")
     private String id;
@@ -74,8 +74,8 @@ public class Post {
     public String getId() {
         return id;
     }
-    public static int getTotalNumOfTweets() { return TotalNumOfTweets;}
-    public static void IncTotalNumOfTweets() {TotalNumOfTweets++;}
+    public static int getTotalNumOfTweets() { return TotalNumOfPosts;}
+    public static void IncTotalNumOfTweets() {TotalNumOfPosts++;}
     public void setId(String id) {
         this.id = id;
     }
