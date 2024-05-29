@@ -35,7 +35,7 @@ public class User {
     @JsonProperty("socialLink")
     private String socialLink;
 
-    public User(String id, String firstName, String lastName, String email, String phoneNumber, String password, String country, Date birthday, Date userCreatedAt,String city , String socialLink , String phoneNumberType) {
+    public User(String id, String firstName, String lastName, String email, String phoneNumberType, String phoneNumber, String password, String country, String city, Date birthday, String socialLink, Date userCreatedAt) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -50,17 +50,17 @@ public class User {
         this.phoneNumberType = phoneNumberType;
     }
 
-    public User(String id, String firstName, String lastName, String email, String phoneNumber, String password, String country, Date birthday) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.password = password;
-        this.country = country;
-        this.birthday = birthday;
-        this.userCreatedAt = new Date(System.currentTimeMillis());
-    }
+//    public User(String id, String firstName, String lastName, String email, String phoneNumberType, String phoneNumber, String password, String country, String city, Date birthday, String socialLink, Date userCreatedAt) {
+//        this.id = id;
+//        this.firstName = firstName;
+//        this.lastName = lastName;
+//        this.email = email;
+//        this.phoneNumber = phoneNumber;
+//        this.password = password;
+//        this.country = country;
+//        this.birthday = birthday;
+//        this.userCreatedAt = new Date(System.currentTimeMillis());
+//    }
 
     public User() {
 
