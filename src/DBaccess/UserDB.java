@@ -19,7 +19,7 @@ public class UserDB {
     }
 
     public void saveUser(User user) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("INSERT INTO users (id, first_name, last_name, email, phoneNumberType ,phone_number, password, country,city, birthday,socialLink, created_at,token) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        PreparedStatement statement = connection.prepareStatement("INSERT INTO users (id, first_name, last_name, email, phoneNumberType ,phone_number, password, country,city, birthday,socialLink, created_at ,token) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         statement.setString(1, user.getId());
         statement.setString(2, user.getFirstName());
         statement.setString(3, user.getLastName());
@@ -86,6 +86,7 @@ public class UserDB {
             user.setPhoneNumberType(resultSet.getString("phoneNumberType"));
             user.setBirthday(resultSet.getDate("birthday"));
             user.setUserCreatedAt(resultSet.getDate("created_at"));
+            user.setToken(resultSet.getString("token"));
             return user;
         }
 
@@ -112,6 +113,7 @@ public class UserDB {
             user.setPhoneNumberType(resultSet.getString("phoneNumberType"));
             user.setBirthday(resultSet.getDate("birthday"));
             user.setUserCreatedAt(resultSet.getDate("created_at"));
+            user.setToken(resultSet.getString("token"));
 
             return user;
         }
@@ -138,6 +140,7 @@ public class UserDB {
             user.setPhoneNumberType(resultSet.getString("phoneNumberType"));
             user.setBirthday(resultSet.getDate("birthday"));
             user.setUserCreatedAt(resultSet.getDate("created_at"));
+            user.setToken(resultSet.getString("token"));
             users.add(user);
         }
 
