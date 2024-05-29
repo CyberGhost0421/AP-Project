@@ -86,6 +86,7 @@ public class UserDB {
             user.setPhoneNumberType(resultSet.getString("phoneNumberType"));
             user.setBirthday(resultSet.getDate("birthday"));
             user.setUserCreatedAt(resultSet.getDate("created_at"));
+            user.setToken(resultSet.getString("token"));
             return user;
         }
 
@@ -112,6 +113,7 @@ public class UserDB {
             user.setPhoneNumberType(resultSet.getString("phoneNumberType"));
             user.setBirthday(resultSet.getDate("birthday"));
             user.setUserCreatedAt(resultSet.getDate("created_at"));
+            user.setToken(resultSet.getString("token"));
 
             return user;
         }
@@ -138,6 +140,7 @@ public class UserDB {
             user.setPhoneNumberType(resultSet.getString("phoneNumberType"));
             user.setBirthday(resultSet.getDate("birthday"));
             user.setUserCreatedAt(resultSet.getDate("created_at"));
+            user.setToken(resultSet.getString("token"));
             users.add(user);
         }
 
