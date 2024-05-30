@@ -167,7 +167,7 @@ public class PostDB {
         }
         return posts;
     }
-    public int NumberOfTweets() throws SQLException {
+    public int NumberOfPosts() throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM posts");
         ResultSet resultSet = preparedStatement.executeQuery();
         int res = 0;
