@@ -57,6 +57,15 @@ public class UserController {
         return response;
     }
 
+    public String getUserByIdAndPass(String id, String pass) throws SQLException, JsonProcessingException {
+        User user = userDB.getUser(id, pass);
+        if (user == null) return null;
+        ObjectMapper objectMapper = new ObjectMapper();
+        String response = objectMapper.writeValueAsString(user);
+
+        return response;
+    }
+
     public boolean isUserExists(String ID) {
         if (ID == null) return false;
         try {
@@ -66,14 +75,9 @@ public class UserController {
         }
     }
 
-    public String getUserByIdAndPass(String id, String pass) throws SQLException, JsonProcessingException {
-        User user = userDB.getUser(id, pass);
-        if (user == null) return null;
-        ObjectMapper objectMapper = new ObjectMapper();
-        String response = objectMapper.writeValueAsString(user);
-
-        return response;
-    }
+    /**
+     *  Generating TOKEN
+     */
     private static final String CHARACTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     private static final int TOKEN_LENGTH = 16;
 

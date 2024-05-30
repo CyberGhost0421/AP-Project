@@ -4,81 +4,81 @@ import java.sql.Date;
 import java.sql.SQLException;
 
 import DBaccess.*;
-import Models.*;
+import Models.Post;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class PostController {
-    private final PostDB tweetDAO;
+    private final PostDB postDB;
 
     public PostController() throws SQLException {
-        tweetDAO = new TweetDB();
+        postDB = new PostDB();
     }
 
-    public String createTweet(String writerId, String ownerId, String text, String quoteTweetId, String[] mediaPaths, int likes, int retweets, int replies) throws SQLException {
-        Tweet tweet = new Tweet();
+    public String createPost(String writerId, String ownerId, String text, String[] mediaPaths, int likes, int replies) throws SQLException {
+        Post post = new Post();
 
-        tweet.setId(String.format("%d", tweetDAO.NumberOfTweets()));
-        Tweet.IncTotalNumOfTweets();
-        tweet.setWriterId(writerId);
-        tweet.setOwnerId(ownerId);
-        tweet.setText(text);
-        tweet.setQuoteTweetId(quoteTweetId);
-        tweet.setMediaPaths(mediaPaths);
-        tweet.setLikes(likes);
-        tweet.setRetweets(retweets);
-        tweet.setReplies(replies);
-        tweet.setCreatedAt(Date.valueOf(LocalDate.now()));
-        tweetDAO.saveTweet(tweet);
-        return tweet.getId();
+        post.setId(String.format("%d", postDB.NumberOfPosts()));
+        Post.IncTotalNumOfTweets();
+        post.setWriterId(writerId);
+        post.setOwnerId(ownerId);
+        post.setText(text);
+        post.setMediaPaths(mediaPaths);
+        post.setLikes(likes);
+        post.setReplies(replies);
+        post.setCreatedAt(Date.valueOf(LocalDate.now()));
+
+        postDB.savePost(post);
+        return post.getId();
     }
 
-    public void updateTweet(String writerId, String ownerId, String text, String quoteTweetId, String[] mediaPaths, int likes, int retweets, int replies) throws SQLException {
-        Tweet tweet = new Tweet();
+    public void updatePost(String writerId, String ownerId, String text, String[] mediaPaths, int likes, int replies) throws SQLException {
+        Post post = new Post();
 
-        tweet.setWriterId(writerId);
-        tweet.setOwnerId(ownerId);
-        tweet.setText(text);
-        tweet.setQuoteTweetId(quoteTweetId);
-        tweet.setMediaPaths(mediaPaths);
-        tweet.setLikes(likes);
-        tweet.setRetweets(retweets);
-        tweet.setReplies(replies);
+        post.setWriterId(writerId);
+        post.setOwnerId(ownerId);
+        post.setText(text);
+        post.setMediaPaths(mediaPaths);
+        post.setLikes(likes);
+        post.setReplies(replies);
 
-        tweetDAO.updateTweet(tweet);
+        postDB.updatePost(post);
     }
 
-    public void deleteTweet(String id) throws SQLException {
-        tweetDAO.deleteTweet(id);
+    public void deletePost(String id) throws SQLException {
+        postDB.deletePost(id);
     }
 
-    public void getTweetByWriterId(String writerId) throws SQLException {
-        tweetDAO.getTweetByWriterId(writerId);
+    public void getPostByWriterId(String writerId) throws SQLException {
+        postDB.getPostByWriterId(writerId);
     }
 
-    public void getTweetByOwnerId(String ownerId) throws SQLException {
-        tweetDAO.getTweetByOwnerId(ownerId);
+    public void getPostByOwnerId(String ownerId) throws SQLException {
+        postDB.getPostByOwnerId(ownerId);
     }
 
-    public Tweet getTweet(String id) throws SQLException {
-        return tweetDAO.getTweet(id);
-    }
-    public String getTweetById(String id) throws SQLException, JsonProcessingException {
-        Tweet tweet = getTweet(id);
-        if (tweet == null) return null;
+    public String getPostById(String id) throws SQLException, JsonProcessingException {
+        Post post = getPost(id);
+        if (post == null)
+            return null;
         ObjectMapper objectMapper = new ObjectMapper();
-        String response = objectMapper.writeValueAsString(tweet);
+        String response = objectMapper.writeValueAsString(post);
         return response;
     }
 
+    public Post getPost(String id) throws SQLException {
+        return postDB.getPost(id);
+    }
+
     public String getAll() throws SQLException, JsonProcessingException {
-        List<Tweet> tweets = tweetDAO.getAll();
+        List<Post> posts = postDB.getAll();
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.writeValueAsString(tweets);
+        return objectMapper.writeValueAsString(posts);
     }
     public void deleteAll() throws SQLException {
-        tweetDAO.deleteAll();
+        postDB.deleteAll();
     }
 }

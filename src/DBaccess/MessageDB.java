@@ -39,11 +39,11 @@ public class MessageDB {
         preparedStatement.executeUpdate();
     }
 
-    public ArrayList<Message> getMessages(String u1, String u2) throws SQLException {
+    public ArrayList<Message> getMessages(String user1, String user2) throws SQLException {
         ArrayList<Message> messages = new ArrayList<>();
         PreparedStatement statement = connection.prepareStatement("SELECT * FROM messages WHERE (sender = ? AND receiver = ?) or (sender = ? AND receiver = ?)");
-        statement.setString(1, u1); statement.setString(2, u2);
-        statement.setString(3, u2); statement.setString(4, u1);
+        statement.setString(1, user1); statement.setString(2, user2);
+        statement.setString(3, user2); statement.setString(4, user1);
         ResultSet resultSet = statement.executeQuery();
         while (resultSet.next()) {
             Message message = new Message();

@@ -40,14 +40,14 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.phoneNumberType = phoneNumberType;
         this.phoneNumber = phoneNumber;
         this.password = password;
         this.country = country;
-        this.birthday = birthday;
-        this.userCreatedAt = userCreatedAt;
-        this.socialLink = socialLink;
         this.city = city;
-        this.phoneNumberType = phoneNumberType;
+        this.birthday = birthday;
+        this.socialLink = socialLink;
+        this.userCreatedAt = userCreatedAt;
     }
 
 //    public User(String id, String firstName, String lastName, String email, String phoneNumberType, String phoneNumber, String password, String country, String city, Date birthday, String socialLink, Date userCreatedAt) {
