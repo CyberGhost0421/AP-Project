@@ -37,9 +37,9 @@
                      <children>
                         <TextField fx:id="firstname_tf" />
                         <TextField fx:id="lastname_tf" />
-                        <ComboBox fx:id="phonenumberType_chb" prefWidth="150.0" />
+                        <ComboBox fx:id="phonenumberType_chb" onAction="#getPhoneNumberType" prefWidth="150.0" />
                         <TextField fx:id="phonenumber_tf" />
-                        <ComboBox fx:id="country_chb" prefWidth="150.0" />
+                        <ComboBox fx:id="country_chb" onAction="#selectCountry" prefWidth="150.0" />
                         <TextField fx:id="city_tf" />
                      </children>
                      <padding>
@@ -65,7 +65,7 @@
                         <TextField fx:id="email_tf" />
                         <PasswordField fx:id="password_tf" />
                         <PasswordField fx:id="repassword_tf" />
-                        <DatePicker fx:id="dateofbirth_date" />
+                        <DatePicker fx:id="dateofbirth_date" onAction="#getDate" />
                         <TextField fx:id="sociallink_tf" />
                      </children>
                      <padding>
@@ -90,7 +90,7 @@
          <bottom>
             <AnchorPane BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="signup_bt" layoutX="242.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Sign Up" textAlignment="CENTER" />
+                  <Button fx:id="signup_bt" layoutX="242.0" mnemonicParsing="false" onAction="#setSignup_bt" prefHeight="25.0" prefWidth="100.0" text="Sign Up" textAlignment="CENTER" />
                   <Label fx:id="resultMessage" layoutX="403.0" layoutY="3.0" prefHeight="18.0" prefWidth="150.0" />
                   <Hyperlink fx:id="signin_bt" layoutX="420.0" layoutY="2.0" onAction="#setSignin_bt" text="already have an account?" textFill="#009dff" />
                </children>

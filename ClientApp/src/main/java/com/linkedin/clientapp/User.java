@@ -6,7 +6,8 @@ import java.util.Date;
 
 public class User {
     @JsonProperty("id")
-    private String id;@JsonProperty("token")
+    private String id;
+    @JsonProperty("token")
     private String token;
     @JsonProperty("firstName")
     private String firstName;
