@@ -1,4 +1,4 @@
-package HttpHandler;
+package HTTPhandler;
 
 import Controllers.LikeController;
 import Controllers.PostController;

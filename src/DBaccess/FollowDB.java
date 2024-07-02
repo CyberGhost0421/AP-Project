@@ -8,7 +8,6 @@ import java.util.List;
 public class FollowDB {
     private final Connection connection;
     public FollowDB() throws SQLException {
-        DatabaseMetaData DatabaseConnectionManager = null;
         connection = DatabaseConnectionManager.getConnection();
         createFollowTable();
     }

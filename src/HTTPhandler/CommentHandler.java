@@ -1,6 +1,6 @@
 package HTTPhandler;
 
-import Controllers.MessageController;
+import Controllers.CommentController;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import org.json.JSONObject;
@@ -9,12 +9,12 @@ import utils.ExtractUserAuth;
 import java.io.*;
 import java.sql.SQLException;
 
-public class MessageHandler implements HttpHandler {
+public class CommentHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        MessageController messageController = null;
+        CommentController commentController = null;
         try {
-            messageController = new MessageController();
+            commentController = new CommentController();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -23,21 +23,21 @@ public class MessageHandler implements HttpHandler {
         String response = "";
         String[] splittedPath = path.split("/");
         switch (method) {
-            case "GET":
-                if (!splittedPath[2].equals(ExtractUserAuth.extract(exchange))) {     //   &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+            case "GET": //port:id/direct/person1/person2
+                if (!splittedPath[2].equals(ExtractUserAuth.extract(exchange))) {
                     response = "permission-denied";
                     break;
                 }
-                if (splittedPath.length == 3) {
-                    try {
-                        response = messageController.getNotify(splittedPath[2], 20);
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                    break;
-                }
+//                if (splittedPath.length == 3) { //port:id/direct/person
+//                    try {
+//                        response = commentController.getNotify(splittedPath[2], 20);
+//                    } catch (SQLException e) {
+//                        e.printStackTrace();
+//                    }
+//                    break;
+//                }
                 try {
-                    response = messageController.getMessages(splittedPath[2], splittedPath[3]);
+                    response = commentController.getComments(splittedPath[2]);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -57,9 +57,9 @@ public class MessageHandler implements HttpHandler {
                     response = "permission-denied";
                     break;
                 }
-                response = "Done.";
+                response = "Done!";
                 try {
-                    messageController.addMessage(jsonObject.getString("id"), jsonObject.getString("sender"), jsonObject.getString("receiver"), jsonObject.getString("text"));
+                    commentController.addComment( jsonObject.getString("sender"), jsonObject.getString("text"));
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }

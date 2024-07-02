@@ -162,7 +162,7 @@ public class Post {
 
     @Override
     public String toString() {
-        return "Tweet{" +
+        return "Post{" +
                 "id='" + id + '\'' +
                 ", writerId='" + writerId + '\'' +
                 ", ownerId='" + ownerId + '\'' +

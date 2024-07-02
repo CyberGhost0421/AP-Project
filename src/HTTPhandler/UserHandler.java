@@ -1,4 +1,4 @@
-package HttpHandler;
+package HTTPhandler;
 
 import Controllers.*;
 import com.sun.net.httpserver.HttpExchange;
@@ -28,6 +28,7 @@ public class UserHandler implements HttpHandler {
                 if (splittedPath.length == 2) {
                     try {
                         response = userController.getUsers();
+                        System.out.println(response);
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
@@ -60,8 +61,8 @@ public class UserHandler implements HttpHandler {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                Files.createDirectories(Paths.get("src/main/java/com/server/" + jsonObject.getString("id")));
-                response = "done.";
+                Files.createDirectories(Paths.get("./Assets/" + jsonObject.getString("id")));
+                response = "this is done!";
                 break;
             case "PUT":
                 response = "This is the response users Put";

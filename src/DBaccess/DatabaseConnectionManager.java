@@ -4,9 +4,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseConnectionManager {
-    private static final String JDBC_URL = "jdbc:postgresql://localhost:5432/ap_project";
-    private static final String USERNAME = "postgres";
-    private static final String PASSWORD = "icpc";
+    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/ap-project";
+    private static final String USERNAME = "root";
+    private static final String PASSWORD = "Amir1383?!";
 
     private static Connection connection;
 

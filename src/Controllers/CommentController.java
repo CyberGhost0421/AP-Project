@@ -2,6 +2,7 @@ package Controllers;
 
 import DBaccess.CommentDB;
 import Models.Comment;
+import Models.Message;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import Models.Comment;
@@ -14,6 +15,10 @@ public class CommentController {
         commentDB = new CommentDB();
     }
 
+    public void addComment(String sender, String text) throws SQLException {
+        Comment comment = new Comment(sender, text);
+        commentDB.saveComment(comment);
+    }
     public void createCommentTable() throws SQLException {
         commentDB.createCommentTable();
     }

@@ -6,7 +6,8 @@ import java.sql.Date;
 
 public class User {
     @JsonProperty("id")
-    private String id;@JsonProperty("token")
+    private String id;
+    @JsonProperty("token")
     private String token;
     @JsonProperty("firstName")
     private String firstName;
@@ -177,13 +178,13 @@ public class User {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
-                ", phoneNumberType=" + phoneNumberType +  ':' +
+                ", phoneNumberType=" + phoneNumberType + ':' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", password='" + password + '\'' +
                 ", country='" + country + '\'' +
-                ", city=" + city +  '\'' +
-                ", birthday=" + birthday +  '\'' +
-                ", createdAt=" + userCreatedAt +  '\'' +
+                ", city=" + city + '\'' +
+                ", birthday=" + birthday + '\'' +
+                ", createdAt=" + userCreatedAt + '\'' +
                 ", socialLink=" + socialLink +
                 '}';
     }

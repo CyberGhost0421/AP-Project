@@ -7,7 +7,6 @@ import java.util.ArrayList;
 public class UserDB {
     private final Connection connection;
     public UserDB() throws SQLException {
-        DatabaseMetaData DatabaseConnectionManager = null;
         connection = DatabaseConnectionManager.getConnection();
         createUserTable();
     }

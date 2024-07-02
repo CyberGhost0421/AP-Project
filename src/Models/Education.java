@@ -98,4 +98,19 @@ public class Education {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @Override
+    public String toString() {
+        return "Education{" +
+                "id='" + id + '\'' +
+                ", institute='" + institute + '\'' +
+                ", study='" + study + '\'' +
+                ", startedDate='" + startedDate + '\'' +
+                ", finishedDate=" + finishedDate + ':' +
+                ", grade='" + grade + '\'' +
+                ", activities='" + activities + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
+
 }
