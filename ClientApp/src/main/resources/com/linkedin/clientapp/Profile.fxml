@@ -2,10 +2,12 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -16,7 +18,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <top>
-      <HBox alignment="TOP_CENTER" prefHeight="20.0" prefWidth="600.0" spacing="8.0" style="-fx-background-color: #dceff5;" BorderPane.alignment="CENTER">
+      <HBox alignment="TOP_CENTER" prefHeight="20.0" prefWidth="600.0" spacing="8.0" style="-fx-background-color: #2e404a;" BorderPane.alignment="CENTER">
          <children>
             <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                <viewport>
@@ -28,23 +30,29 @@
                <image>
                   <Image url="@./pics/icons8-linked-in-144.png" />
                </image>
+               <cursor>
+                  <Cursor fx:constant="OPEN_HAND" />
+               </cursor>
+               <effect>
+                  <ColorAdjust brightness="0.24" contrast="-0.27" hue="-0.09" saturation="-0.2" />
+               </effect>
             </ImageView>
-            <Button mnemonicParsing="false" text="Home">
+            <Button mnemonicParsing="false" style="-fx-border-color: #56b7ba;" text="Home">
                <HBox.margin>
                   <Insets top="8.0" />
                </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" text="Profile">
+            <Button mnemonicParsing="false" style="-fx-border-color: #56b7ba;" text="Profile">
                <HBox.margin>
                   <Insets top="8.0" />
                </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" text="Search">
+            <Button mnemonicParsing="false" style="-fx-border-color: #56b7ba;" text="Search">
                <HBox.margin>
                   <Insets top="8.0" />
                </HBox.margin>
             </Button>
-            <Button alignment="CENTER" mnemonicParsing="false" text="Log-Out" textAlignment="CENTER">
+            <Button alignment="CENTER" mnemonicParsing="false" style="-fx-border-color: #56b7ba;" text="Log-Out" textAlignment="CENTER">
                <HBox.margin>
                   <Insets left="210.0" top="8.0" />
                </HBox.margin>
@@ -61,32 +69,32 @@
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #dceff5;">
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #56b7ba;">
                <children>
-                  <Circle fill="#a1d2ff" layoutX="59.0" layoutY="41.0" radius="35.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Circle fill="#2e404a" layoutX="59.0" layoutY="41.0" radius="35.0" stroke="#2e404a" strokeType="INSIDE" />
                   <VBox alignment="CENTER_LEFT" layoutX="121.0" layoutY="9.0" prefHeight="66.0" prefWidth="100.0" spacing="8.0">
                      <children>
-                        <Label text="username" />
-                        <Label text="Full Name" />
+                        <Label text="username" textFill="#2e404a" />
+                        <Label text="Full Name" textFill="#2e404a" />
                      </children>
                      <padding>
                         <Insets left="6.0" />
                      </padding>
                   </VBox>
-                  <Button layoutX="457.0" layoutY="43.0" mnemonicParsing="false" text="Message" />
-                  <ToggleButton layoutX="527.0" layoutY="43.0" mnemonicParsing="false" text="Follow" />
+                  <Button layoutX="457.0" layoutY="43.0" mnemonicParsing="false" style="-fx-border-color: #2e404a;" text="Message" />
+                  <ToggleButton layoutX="527.0" layoutY="43.0" mnemonicParsing="false" style="-fx-border-color: #2e404a;" text="Follow" />
                </children></AnchorPane>
-            <AnchorPane prefHeight="378.0" prefWidth="600.0" style="-fx-background-color: #bae7f5;">
+            <AnchorPane prefHeight="378.0" prefWidth="633.0" style="-fx-background-color: #2e404a;">
                <children>
-                  <HBox layoutX="187.0" layoutY="74.0" prefHeight="262.4" prefWidth="600.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="6.0">
+                  <HBox layoutX="-0.8" layoutY="7.2" prefHeight="258.0" prefWidth="600.0" style="-fx-background-color: #56b7ba;" AnchorPane.bottomAnchor="-3.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="7.0">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
                      <children>
                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="5.0">
                            <children>
-                              <Label alignment="CENTER" text="Skills" textAlignment="CENTER" />
-                              <ListView maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="219.0" prefWidth="90.0" />
+                              <Label alignment="CENTER" text="Skills" textAlignment="CENTER" textFill="#2e404a" />
+                              <ListView maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="90.0" />
                            </children>
                            <padding>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

@@ -8,6 +8,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -16,13 +17,13 @@
 
 <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.linkedin.clientapp.SignUpController">
    <children>
-      <BorderPane layoutX="200.0" layoutY="82.0" prefWidth="600.0" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="4.0">
+      <BorderPane layoutX="200.0" layoutY="82.0" prefWidth="600.0" style="-fx-background-color: #74dbe8;" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="4.0">
          <center>
             <HBox alignment="TOP_CENTER" fillHeight="false" prefHeight="100.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
                <children>
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0">
                      <children>
-                        <Label maxWidth="1.7976931348623157E308" minWidth="-Infinity" text="FirstName" textAlignment="CENTER" />
+                        <Label maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefHeight="231.0" prefWidth="103.0" text="FirstName" textAlignment="CENTER" />
                         <Label maxWidth="1.7976931348623157E308" minWidth="-Infinity" text="LastName" textAlignment="CENTER" />
                         <Label maxWidth="1.7976931348623157E308" minWidth="-Infinity" text="PhoneNumberType" textAlignment="CENTER" />
                         <Label maxWidth="1.7976931348623157E308" minWidth="-Infinity" text="PhoneNumber" />
@@ -35,12 +36,12 @@
                   </VBox>
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
                      <children>
-                        <TextField fx:id="firstname_tf" />
-                        <TextField fx:id="lastname_tf" />
-                        <ComboBox fx:id="phonenumberType_chb" onAction="#getPhoneNumberType" prefWidth="150.0" />
-                        <TextField fx:id="phonenumber_tf" />
-                        <ComboBox fx:id="country_chb" onAction="#selectCountry" prefWidth="150.0" />
-                        <TextField fx:id="city_tf" />
+                        <TextField fx:id="firstname_tf" promptText="first name" />
+                        <TextField fx:id="lastname_tf" promptText="last name" />
+                        <ComboBox fx:id="phonenumberType_chb" prefWidth="150.0" promptText="type" visibleRowCount="5" />
+                        <TextField fx:id="phonenumber_tf" promptText="number" />
+                        <ComboBox fx:id="country_chb" prefWidth="150.0" promptText="choose" visibleRowCount="5" />
+                        <TextField fx:id="city_tf" promptText="city" />
                      </children>
                      <padding>
                         <Insets left="4.0" right="4.0" />
@@ -53,7 +54,7 @@
                         <Label maxWidth="1.7976931348623157E308" minWidth="-Infinity" text="Password" textAlignment="CENTER" />
                         <Label maxWidth="1.7976931348623157E308" minWidth="-Infinity" text="Re-Enter Password" />
                         <Label maxWidth="1.7976931348623157E308" minWidth="-Infinity" text="Date of Birth" />
-                        <Label maxWidth="1.7976931348623157E308" minWidth="-Infinity" text="SocialLink URL" />
+                        <Label maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefHeight="3.0" prefWidth="99.0" text="SocialLink URL" />
                      </children>
                      <padding>
                         <Insets left="4.0" right="4.0" />
@@ -61,12 +62,12 @@
                   </VBox>
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
                      <children>
-                        <TextField fx:id="username_tf" />
-                        <TextField fx:id="email_tf" />
-                        <PasswordField fx:id="password_tf" />
+                        <TextField fx:id="username_tf" promptText="username" />
+                        <TextField fx:id="email_tf" promptText="\@email" />
+                        <PasswordField fx:id="password_tf" promptText="password" />
                         <PasswordField fx:id="repassword_tf" />
-                        <DatePicker fx:id="dateofbirth_date" onAction="#getDate" />
-                        <TextField fx:id="sociallink_tf" />
+                        <DatePicker fx:id="dateofbirth_date" promptText="date" />
+                        <TextField fx:id="sociallink_tf" promptText="link" />
                      </children>
                      <padding>
                         <Insets left="4.0" right="4.0" />
@@ -90,9 +91,9 @@
          <bottom>
             <AnchorPane BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="signup_bt" layoutX="242.0" mnemonicParsing="false" onAction="#setSignup_bt" prefHeight="25.0" prefWidth="100.0" text="Sign Up" textAlignment="CENTER" />
+                  <Button fx:id="signup_bt" layoutX="242.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" style="-fx-background-color: #2a7fc9;" text="Sign Up" textAlignment="CENTER" textFill="WHITE" />
                   <Label fx:id="resultMessage" layoutX="403.0" layoutY="3.0" prefHeight="18.0" prefWidth="150.0" />
-                  <Hyperlink fx:id="signin_bt" layoutX="420.0" layoutY="2.0" onAction="#setSignin_bt" text="already have an account?" textFill="#009dff" />
+                  <Hyperlink fx:id="signin_bt" layoutX="420.0" layoutY="2.0" onAction="#setSignin_bt" text="already have an account?" textFill="#2a7fc9" />
                </children>
                <BorderPane.margin>
                   <Insets bottom="4.0" left="4.0" right="4.0" top="20.0" />
@@ -100,7 +101,10 @@
             </AnchorPane>
          </bottom>
          <top>
-            <ImageView fitHeight="65.0" fitWidth="72.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER_LEFT" />
+            <ImageView fitHeight="63.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true" style="-fx-image: #;" BorderPane.alignment="CENTER_LEFT">
+               <image>
+                  <Image url="@pics/icons8-linked-in-144.png" />
+               </image></ImageView>
          </top>
       </BorderPane>
    </children>
