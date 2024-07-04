@@ -10,11 +10,14 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.linkedin.clientapp.ProfileController">
    <top>
       <HBox alignment="TOP_CENTER" prefHeight="20.0" prefWidth="600.0" spacing="8.0" style="-fx-background-color: #dceff5;" BorderPane.alignment="CENTER">
          <children>
@@ -29,22 +32,22 @@
                   <Image url="@./pics/icons8-linked-in-144.png" />
                </image>
             </ImageView>
-            <Button mnemonicParsing="false" text="Home">
+            <Button fx:id="home_bt" mnemonicParsing="false" text="Home">
                <HBox.margin>
                   <Insets top="8.0" />
                </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" text="Profile">
+            <Button fx:id="Profile_bt" mnemonicParsing="false" onAction="#setProfile_bt" text="Profile">
                <HBox.margin>
                   <Insets top="8.0" />
                </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" text="Search">
+            <Button fx:id="search_bt" mnemonicParsing="false" text="Search">
                <HBox.margin>
                   <Insets top="8.0" />
                </HBox.margin>
             </Button>
-            <Button alignment="CENTER" mnemonicParsing="false" text="Log-Out" textAlignment="CENTER">
+            <Button fx:id="logout_bt" alignment="CENTER" mnemonicParsing="false" onAction="#logoutClicked" text="Log-Out" textAlignment="CENTER">
                <HBox.margin>
                   <Insets left="210.0" top="8.0" />
                </HBox.margin>
@@ -63,18 +66,35 @@
          <children>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #dceff5;">
                <children>
-                  <Circle fill="#a1d2ff" layoutX="59.0" layoutY="41.0" radius="35.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Circle fx:id="profile_img" fill="#a1d2ff" layoutX="59.0" layoutY="41.0" onMouseClicked="#setProfile_img" radius="35.0" stroke="BLACK" strokeType="INSIDE" />
                   <VBox alignment="CENTER_LEFT" layoutX="121.0" layoutY="9.0" prefHeight="66.0" prefWidth="100.0" spacing="8.0">
                      <children>
-                        <Label text="username" />
-                        <Label text="Full Name" />
+                        <Label fx:id="username_tf" text="username" />
+                        <Label fx:id="FullName_tf" text="Full Name" />
                      </children>
                      <padding>
                         <Insets left="6.0" />
                      </padding>
                   </VBox>
-                  <Button layoutX="457.0" layoutY="43.0" mnemonicParsing="false" text="Message" />
-                  <ToggleButton layoutX="527.0" layoutY="43.0" mnemonicParsing="false" text="Follow" />
+                  <Button fx:id="message_bt" layoutX="457.0" layoutY="43.0" mnemonicParsing="false" text="Message" />
+                  <ToggleButton fx:id="Follow_bt" layoutX="527.0" layoutY="43.0" mnemonicParsing="false" text="Follow" />
+                  <GridPane alignment="CENTER" layoutX="300.0" layoutY="17.0" prefHeight="50.0" prefWidth="126.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Followers" />
+                        <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Followings" GridPane.columnIndex="1" />
+                        <Label fx:id="followers_tf" alignment="CENTER" maxWidth="1.7976931348623157E308" text="0" textAlignment="CENTER" GridPane.rowIndex="1" />
+                        <Label fx:id="followings_tf" alignment="CENTER" maxWidth="1.7976931348623157E308" text="0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                     </children>
+                  </GridPane>
+                  <ImageView fx:id="image_view" fitHeight="76.0" fitWidth="79.0" layoutX="20.0" layoutY="3.0" onDragDetected="#setProfile_img" onMouseClicked="#setProfile_img" pickOnBounds="true" preserveRatio="true" />
                </children></AnchorPane>
             <AnchorPane prefHeight="378.0" prefWidth="600.0" style="-fx-background-color: #bae7f5;">
                <children>

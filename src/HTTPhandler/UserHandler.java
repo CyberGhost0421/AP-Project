@@ -3,11 +3,13 @@ package HTTPhandler;
 import Controllers.*;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.sql.Date;
+
 import org.json.JSONObject;
 
 public class UserHandler implements HttpHandler {
@@ -57,7 +59,7 @@ public class UserHandler implements HttpHandler {
                 String newUser = body.toString();
                 JSONObject jsonObject = new JSONObject(newUser);
                 try {
-                    userController.createUser(jsonObject.getString("id"), jsonObject.getString("firstName"), jsonObject.getString("lastName"), jsonObject.getString("email"), jsonObject.getString("phoneNumberType"),  jsonObject.getString("phoneNumber"), jsonObject.getString("password"), jsonObject.getString("country"), jsonObject.getString("city"), new Date(jsonObject.getLong("birthday")) , jsonObject.getString("socialLink"), new Date(jsonObject.getLong("userCreatedAt")));
+                    userController.createUser(jsonObject.getString("id"), jsonObject.getString("firstName"), jsonObject.getString("lastName"), jsonObject.getString("email"), jsonObject.getString("phoneNumberType"), jsonObject.getString("phoneNumber"), jsonObject.getString("password"), jsonObject.getString("country"), jsonObject.getString("city"), new Date(jsonObject.getLong("birthday")), jsonObject.getString("socialLink"), new Date(jsonObject.getLong("userCreatedAt")));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -65,7 +67,27 @@ public class UserHandler implements HttpHandler {
                 response = "this is done!";
                 break;
             case "PUT":
-                response = "This is the response users Put";
+                if (splittedPath.length == 3) {
+                    requestBody = exchange.getRequestBody();
+                    reader = new BufferedReader(new InputStreamReader(requestBody));
+                    body = new StringBuilder();
+                    while ((line = reader.readLine()) != null) {
+                        body.append(line);
+                    }
+                    requestBody.close();
+                    newUser = body.toString();
+                    jsonObject = new JSONObject(newUser);
+//                    System.out.println(newUser);
+                    try {
+
+                        userController.updateUser(jsonObject.getString("id"), jsonObject.getString("firstName"), jsonObject.getString("lastName"), jsonObject.getString("email"), jsonObject.getString("phoneNumberType"), jsonObject.getString("phoneNumber"), jsonObject.getString("password"), jsonObject.getString("country"), jsonObject.getString("city"), new Date(jsonObject.getLong("birthday")), jsonObject.getString("socialLink"), new Date(jsonObject.getLong("userCreatedAt")));
+
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                response = "User Updated";
                 break;
             case "DELETE":
                 if (splittedPath.length == 2) {

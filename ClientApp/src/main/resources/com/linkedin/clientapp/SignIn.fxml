@@ -28,14 +28,14 @@
                 <RowConstraints minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <PasswordField fx:id="password_tx" style="-fx-background-color: #E9F9FF;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="32.0" prefWidth="67.0" text="Username" textAlignment="CENTER" textFill="WHITE" />
+                  <Label alignment="CENTER" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="32.0" prefWidth="67.0" text="Password" textFill="WHITE" GridPane.rowIndex="1" />
                   <TextField fx:id="username_tf" prefHeight="26.0" prefWidth="106.0" style="-fx-background-color: #E9F9FF;" GridPane.columnIndex="1" />
-                  <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="32.0" prefWidth="67.0" text="Username" textAlignment="CENTER" textFill="WHITE" />
-                  <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="32.0" prefWidth="67.0" text="Password" textFill="WHITE" GridPane.rowIndex="1" />
+                  <PasswordField fx:id="password_tx" style="-fx-background-color: #E9F9FF;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
             </GridPane>
-            <Hyperlink fx:id="signup_bt" layoutX="43.0" layoutY="292.0" onAction="#signUpButton" text="Don't have an Account? (SignUp)" textFill="WHITE" />
             <Button fx:id="login_bt" layoutX="77.0" layoutY="225.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onLoginClicked" prefHeight="30.0" prefWidth="114.0" style="-fx-background-color: #85DAFF;" text="Login" textAlignment="CENTER" />
+            <Hyperlink fx:id="signup_bt" layoutX="43.0" layoutY="292.0" onAction="#signUpButton" text="Don't have an Account? (SignUp)" textFill="WHITE" />
             <FontAwesomeIcon glyphName="USER" layoutX="43.0" layoutY="163.0" />
             <FontAwesomeIcon glyphName="KEY" layoutX="42.0" layoutY="197.0" />
             <ImageView fitHeight="94.0" fitWidth="129.0" layoutX="23.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
@@ -43,7 +43,7 @@
                   <Image url="@./pics/icons8-linked-in-144.png" />
                </image>
             </ImageView>
-            <TextField fx:id="result_msg" layoutX="59.0" layoutY="265.0" style="-fx-background-color: transparent;" />
+            <TextField fx:id="result_msg" focusTraversable="false" layoutX="59.0" layoutY="265.0" style="-fx-background-color: transparent;" />
          </children>
       </AnchorPane>
    </center>

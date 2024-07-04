@@ -2,20 +2,19 @@ package com.linkedin.clientapp;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.ResourceBundle;
 
-public class SignInController {
+public class SignInController implements Initializable {
 
     @FXML
     private Button login_bt;
@@ -29,6 +28,10 @@ public class SignInController {
 
     @FXML
     private TextField username_tf;
+
+    public void initialize(URL url, ResourceBundle rb) {
+//        sceneCleaner();
+    }
 
     @FXML
     void onLoginClicked(ActionEvent event) throws Exception {
@@ -78,7 +81,7 @@ public class SignInController {
 
                     JSONObject obj = new JSONObject(response);
                     User user = new User(obj.getString("id"), obj.getString("firstName"), obj.getString("lastName"), obj.getString("email"), obj.getString("phoneNumberType"),obj.getString("phoneNumber"), obj.getString("password"), obj.getString("country"),obj.getString("city"), new Date(obj.getLong("birthday")),obj.getString("socialLink"),new Date(obj.getLong("userCreatedAt")));
-                    MainApplication.currentUser = user;
+                    MainApplication.loggedInUser = user;
                     sceneCleaner();
                     app.changeCurrentScene("Profile");
                 }

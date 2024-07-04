@@ -21,7 +21,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.linkedin.clientapp.EditProfileController">
    <top>
       <HBox alignment="TOP_CENTER" prefHeight="20.0" prefWidth="600.0" spacing="8.0" style="-fx-background-color: #dceff5;" BorderPane.alignment="CENTER">
          <children>
@@ -41,7 +41,7 @@
                   <Insets top="8.0" />
                </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" text="Profile">
+            <Button fx:id="Profile_bt" mnemonicParsing="false" onAction="#setProfile_bt" text="Profile">
                <HBox.margin>
                   <Insets top="8.0" />
                </HBox.margin>
@@ -51,7 +51,7 @@
                   <Insets top="8.0" />
                </HBox.margin>
             </Button>
-            <Button alignment="CENTER" mnemonicParsing="false" text="Log-Out" textAlignment="CENTER">
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#logoutClicked" text="Log-Out" textAlignment="CENTER">
                <HBox.margin>
                   <Insets left="210.0" top="8.0" />
                </HBox.margin>
@@ -65,15 +65,8 @@
          </BorderPane.margin>
       </HBox>
    </top>
-   <bottom>
-      <Button mnemonicParsing="false" text="Save" BorderPane.alignment="CENTER">
-         <BorderPane.margin>
-            <Insets bottom="4.0" top="2.0" />
-         </BorderPane.margin>
-      </Button>
-   </bottom>
    <center>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="200.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
             <TabPane prefHeight="316.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <tabs>
@@ -96,12 +89,12 @@
                               </VBox>
                               <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
                                  <children>
-                                    <TextField />
-                                    <TextField />
-                                    <ChoiceBox prefWidth="150.0" />
-                                    <TextField />
-                                    <ChoiceBox prefWidth="150.0" />
-                                    <TextField />
+                                    <TextField fx:id="firstname_tf" />
+                                    <TextField fx:id="lastname_tf" />
+                                    <ChoiceBox fx:id="phoneNumberType_cb" onDragDetected="#getPhoneNumberType" prefWidth="150.0" />
+                                    <TextField fx:id="phoneNumber_tf" />
+                                    <ChoiceBox fx:id="country_cb" onDragDetected="#selectCountry" prefWidth="150.0" />
+                                    <TextField fx:id="city_tf" />
                                  </children>
                                  <padding>
                                     <Insets left="4.0" right="4.0" />
@@ -121,11 +114,11 @@
                               </VBox>
                               <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
                                  <children>
-                                    <TextField disable="true" />
-                                    <TextField disable="true" />
-                                    <DatePicker />
-                                    <TextField />
-                                    <Button mnemonicParsing="false" text="Choose" />
+                                    <TextField fx:id="username_tf" disable="true" />
+                                    <TextField fx:id="email_tf" disable="true" />
+                                    <DatePicker fx:id="dateofbirth_tf" onAction="#getDate" />
+                                    <TextField fx:id="sociallink_tf" />
+                                    <Button fx:id="fileChooser_bt" mnemonicParsing="false" onAction="#AvatarFileChooser" text="Choose" />
                                  </children>
                                  <padding>
                                     <Insets left="4.0" right="4.0" />
@@ -198,11 +191,11 @@
                                     </VBox>
                                     <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
                                        <children>
-                                          <TextField disable="true" />
-                                          <TextField />
-                                          <PasswordField />
-                                          <PasswordField />
-                                          <PasswordField />
+                                          <TextField fx:id="username2_tf" disable="true" />
+                                          <TextField fx:id="email2_tf" />
+                                          <PasswordField fx:id="currentPassword_tf" />
+                                          <PasswordField fx:id="newPassword_tf" />
+                                          <PasswordField fx:id="rePassword_tf" />
                                        </children>
                                        <padding>
                                           <Insets left="4.0" right="4.0" />
@@ -222,12 +215,12 @@
                                  <children>
                                     <VBox alignment="CENTER_LEFT">
                                        <children>
-                                          <CheckBox mnemonicParsing="false" text="Private Account" />
+                                          <CheckBox fx:id="PV_checkbox" mnemonicParsing="false" text="Private Account" />
                                        </children>
                                     </VBox>
                                     <AnchorPane>
                                        <children>
-                                          <Label alignment="CENTER" layoutX="36.0" layoutY="264.0" text="Delete Account" textAlignment="CENTER" textFill="RED" />
+                                          <Label fx:id="DeleteAccount_bt" alignment="CENTER" layoutX="36.0" layoutY="264.0" text="Delete Account" textAlignment="CENTER" textFill="RED" />
                                        </children>
                                        <HBox.margin>
                                           <Insets left="250.0" />
@@ -247,4 +240,21 @@
          </children>
       </AnchorPane>
    </center>
+   <bottom>
+      <HBox alignment="CENTER" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="save_bt" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#SaveChangePressed" text="Save" textAlignment="CENTER" />
+            <Label fx:id="resultMessage" alignment="CENTER" prefHeight="25.0" prefWidth="170.0" />
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+         <padding>
+            <Insets bottom="4.0" left="170.0" top="4.0" />
+         </padding>
+      </HBox>
+   </bottom>
 </BorderPane>

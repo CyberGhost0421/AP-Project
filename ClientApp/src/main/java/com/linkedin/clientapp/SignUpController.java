@@ -80,7 +80,8 @@ public class SignUpController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        ObservableList <String> list = FXCollections.observableArrayList("IRAN", "USA", "IRAQ", "TURKEY", "SPAIN", "UK", "DENMARK", "RUSSIA");
+        sceneCleaner();
+        ObservableList <String> list = FXCollections.observableArrayList("IRAN", "USA", "SWEDEN", "TURKEY", "SPAIN", "UK", "DENMARK", "RUSSIA","CANADA");
         country_chb.setItems(list);
         ObservableList <String> list2 = FXCollections.observableArrayList("Mobile","Work","Home");
         phonenumberType_chb.setItems(list2);
@@ -206,12 +207,12 @@ public class SignUpController implements Initializable {
         firstname_tf.setText("");
         lastname_tf.setText("");
         phonenumber_tf.setText("");
-//        phonenumberType_chb.setValue();
+        phonenumberType_chb.getSelectionModel().clearSelection();
         city_tf.setText("");
         username_tf.setText("");
         password_tf.setText("");
         repassword_tf.setText("");
-//        dateofbirth_date.setValue();
+        dateofbirth_date.setValue(null);
         sociallink_tf.setText("");
     }
 

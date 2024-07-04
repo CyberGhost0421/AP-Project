@@ -6,13 +6,14 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.security.PrivateKey;
 
 public class MainApplication extends Application {
     private static Stage currentStage;
     private static Scene currentScene;
     public static String userToken;
-    public static User currentUser;
+    public static User loggedInUser;
+
+    public static User searchedUser;
 
 
     @Override
