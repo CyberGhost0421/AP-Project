@@ -95,15 +95,16 @@ public class EditProfileController implements Initializable {
     @FXML
     private TextField username_tf;
     private File AvatarFile = null;
-    String dateofbirthselected ;
-    String country ;
+    String dateofbirthselected;
+    String country;
     String phoneNumberType;
-    String newPass ;
+    String newPass;
     String socialLink;
+
     @Override
-    public void initialize(URL url, ResourceBundle rb){
+    public void initialize(URL url, ResourceBundle rb) {
         try {
-            ObservableList<String> list = FXCollections.observableArrayList("IRAN", "USA", "SWEDEN", "TURKEY", "SPAIN", "UK", "DENMARK", "RUSSIA","CANADA");
+            ObservableList<String> list = FXCollections.observableArrayList("IRAN", "USA", "SWEDEN", "TURKEY", "SPAIN", "UK", "DENMARK", "RUSSIA", "CANADA");
             country_cb.setItems(list);
             ObservableList<String> list2 = FXCollections.observableArrayList("Mobile", "Work", "Home");
             phoneNumberType_cb.setItems(list2);
@@ -152,11 +153,11 @@ public class EditProfileController implements Initializable {
         {
 
             // main app user
-            if (firstname_tf.getText().isBlank() || lastname_tf.getText().isBlank() || phoneNumber_tf.getText().isBlank() || phoneNumberType_cb.getValue().toString().isBlank() || city_tf.getText().isBlank() || country_cb.getValue().toString().isBlank() || email_tf.getText().isBlank()||email2_tf.getText().isBlank()) {
+            if (firstname_tf.getText().isBlank() || lastname_tf.getText().isBlank() || phoneNumber_tf.getText().isBlank() || phoneNumberType_cb.getValue().toString().isBlank() || city_tf.getText().isBlank() || country_cb.getValue().toString().isBlank() || email_tf.getText().isBlank() || email2_tf.getText().isBlank()) {
                 resultMessage.setText("please enter all fields");
                 return;
             }
-            if (!email2_tf.getText().equals(MainApplication.loggedInUser.getEmail()) &&!isValidEmailAddress(email2_tf.getText())) {
+            if (!email2_tf.getText().equals(MainApplication.loggedInUser.getEmail()) && !isValidEmailAddress(email2_tf.getText())) {
                 resultMessage.setText("Email is invalid");
                 return;
             }
@@ -179,9 +180,9 @@ public class EditProfileController implements Initializable {
                     newPass = newPassword_tf.getText();
                 }
 
-                if (!sociallink_tf.getText().isBlank()){
+                if (!sociallink_tf.getText().isBlank()) {
                     socialLink = sociallink_tf.getText();
-                }else {
+                } else {
                     socialLink = "";
                 }
 
@@ -269,10 +270,8 @@ public class EditProfileController implements Initializable {
 
     public void logoutClicked(ActionEvent event) throws Exception {
 
-        MainApplication.loggedInUser = null;
-        MainApplication.searchedUser = null;
-
         MainApplication app = new MainApplication();
+        app.logedOut();
         app.changeCurrentScene("SignIn");
 
     }
@@ -311,6 +310,7 @@ public class EditProfileController implements Initializable {
             return new User("", "", "", "", "", "", "", "", "", new Date(), "", new Date());
         }
     }
+
     public void AvatarFileChooser(ActionEvent event) throws Exception {
         FileChooser fc = new FileChooser();
         fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("Pictures", "*.png"));
@@ -321,6 +321,7 @@ public class EditProfileController implements Initializable {
 //            Avatar_label.setText("Selected File::" + f.getAbsolutePath());
         }
     }
+
     public static boolean isValidPass(String pass) {
         boolean cap = false, small = false;
         for (char c : pass.toCharArray()) {

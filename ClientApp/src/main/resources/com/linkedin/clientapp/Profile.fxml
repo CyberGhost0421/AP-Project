@@ -42,7 +42,7 @@
                   <Insets top="8.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="search_bt" mnemonicParsing="false" text="Search">
+            <Button fx:id="search_bt" mnemonicParsing="false" onMouseClicked="#setSearch_bt" text="Search">
                <HBox.margin>
                   <Insets top="8.0" />
                </HBox.margin>
@@ -76,7 +76,7 @@
                         <Insets left="6.0" />
                      </padding>
                   </VBox>
-                  <Button fx:id="message_bt" layoutX="457.0" layoutY="43.0" mnemonicParsing="false" text="Message" />
+                  <Button fx:id="message_bt" alignment="CENTER" layoutX="457.0" layoutY="43.0" mnemonicParsing="false" text="Message" />
                   <ToggleButton fx:id="Follow_bt" layoutX="527.0" layoutY="43.0" mnemonicParsing="false" text="Follow" />
                   <GridPane alignment="CENTER" layoutX="300.0" layoutY="17.0" prefHeight="50.0" prefWidth="126.0">
                     <columnConstraints>

@@ -81,6 +81,8 @@ public class SignInController implements Initializable {
 
                     JSONObject obj = new JSONObject(response);
                     User user = new User(obj.getString("id"), obj.getString("firstName"), obj.getString("lastName"), obj.getString("email"), obj.getString("phoneNumberType"),obj.getString("phoneNumber"), obj.getString("password"), obj.getString("country"),obj.getString("city"), new Date(obj.getLong("birthday")),obj.getString("socialLink"),new Date(obj.getLong("userCreatedAt")));
+                    app.tokenFileWriter(obj.getString("token"));
+                    MainApplication.userToken = app.tokenFileReader();
                     MainApplication.loggedInUser = user;
                     sceneCleaner();
                     app.changeCurrentScene("Profile");

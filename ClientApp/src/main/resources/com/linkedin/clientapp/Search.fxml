@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.linkedin.clientapp.SearchController">
    <top>
       <HBox alignment="TOP_CENTER" prefHeight="20.0" prefWidth="600.0" spacing="8.0" BorderPane.alignment="CENTER">
          <children>
@@ -31,7 +31,7 @@
                   <Insets top="8.0" />
                </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" text="Profile">
+            <Button mnemonicParsing="false" onAction="#setProfile_bt" text="Profile">
                <HBox.margin>
                   <Insets top="8.0" />
                </HBox.margin>
@@ -41,7 +41,7 @@
                   <Insets top="8.0" />
                </HBox.margin>
             </Button>
-            <Button alignment="CENTER" mnemonicParsing="false" text="Log-Out" textAlignment="CENTER">
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#logoutClicked" text="Log-Out" textAlignment="CENTER">
                <HBox.margin>
                   <Insets left="210.0" top="8.0" />
                </HBox.margin>
@@ -60,8 +60,8 @@
          <top>
             <HBox alignment="CENTER" prefHeight="40.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                <children>
-                  <TextField alignment="CENTER" />
-                  <Button mnemonicParsing="false" text="Button" textAlignment="CENTER">
+                  <TextField fx:id="search_tf" alignment="CENTER" />
+                  <Button fx:id="search_bt" mnemonicParsing="false" onAction="#searching" text="Search" textAlignment="CENTER">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
@@ -72,7 +72,7 @@
          <center>
             <HBox alignment="CENTER" BorderPane.alignment="CENTER">
                <children>
-                  <ListView prefHeight="295.0" prefWidth="374.0" />
+                  <ListView fx:id="list_lv" prefHeight="295.0" prefWidth="374.0" />
                   <ScrollBar orientation="VERTICAL" />
                </children>
                <BorderPane.margin>

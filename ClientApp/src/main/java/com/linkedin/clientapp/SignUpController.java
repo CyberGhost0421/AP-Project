@@ -182,6 +182,7 @@ public class SignUpController implements Initializable {
                         if (response.equals("this is done!")) {
                             sceneCleaner();
                             resultMessage.setText("Register completed");
+
                         } else
                             resultMessage.setText("Server error");
                     }
