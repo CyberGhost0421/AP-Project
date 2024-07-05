@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.stage.FileChooser;
 import org.json.JSONArray;
@@ -16,6 +17,19 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 
 import java.io.*;
 import java.net.ConnectException;
@@ -27,6 +41,8 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.ResourceBundle;
 
@@ -36,7 +52,18 @@ import static java.lang.System.setOut;
 public class EditProfileController implements Initializable {
     @FXML
     private Label DeleteAccount_bt;
-
+    @FXML
+    private Button skillsave_bt;
+    @FXML
+    private ListView skillListView;
+    @FXML
+    private TextField title_tf;
+    @FXML
+    private FontAwesomeIcon plus_bt;
+    @FXML
+    private TextArea detail_tf;
+    @FXML
+    private FontAwesomeIcon delete_bt;
     @FXML
     private CheckBox PV_checkbox;
 
@@ -100,7 +127,7 @@ public class EditProfileController implements Initializable {
     String phoneNumberType;
     String newPass;
     String socialLink;
-
+    String selectedTitle;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
@@ -119,6 +146,34 @@ public class EditProfileController implements Initializable {
             phoneNumberType_cb.setValue(phoneNumberType);
 
             User thisuser = getUser(MainApplication.loggedInUser.getId());
+
+            title_tf.setVisible(false);
+            detail_tf.setVisible(false);
+            skillsave_bt.setVisible(false);
+
+            try {
+                skillListView.setItems(skillsGetter(MainApplication.loggedInUser.getId()));
+                skillListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        selectedTitle = skillListView.getSelectionModel().getSelectedItem().toString();
+                        String id = MainApplication.loggedInUser.getId();
+                        try {
+                            Skill skillSelected = skillGetter(id,selectedTitle);
+                            detail_tf.setText(skillSelected.getSkillDetail());
+                            title_tf.setText(selectedTitle);
+                            title_tf.setVisible(true);
+                            detail_tf.setVisible(true);
+                            skillsave_bt.setVisible(false);
+
+                        } catch (IOException e) {
+                            System.out.println("finding user Skill failed");
+                        }
+                    }
+                });
+            } catch (Exception e) {
+
+            }
 
             username_tf.setText(thisuser.getId());
             username2_tf.setText(thisuser.getId());
@@ -201,7 +256,6 @@ public class EditProfileController implements Initializable {
                     HttpURLConnection con = (HttpURLConnection) url.openConnection();
                     ObjectMapper objectMapper = new ObjectMapper();
                     String json = objectMapper.writeValueAsString(user);
-                    System.out.println(json);
                     byte[] postDataBytes = json.getBytes();
                     con.setRequestMethod("PUT");
                     con.setDoOutput(true);
@@ -258,6 +312,219 @@ public class EditProfileController implements Initializable {
         }
 
     }
+
+    public void setEdit_bt(MouseEvent event) throws IOException {
+        if (selectedTitle == null){
+            return;
+        }
+        Skill skill = skillGetter(MainApplication.loggedInUser.getId(),selectedTitle);
+        title_tf.setVisible(true);
+        title_tf.setText(selectedTitle);
+        detail_tf.setVisible(true);
+        detail_tf.setText(skill.getSkillDetail());
+        skillsave_bt.setVisible(true);
+        skillsave_bt.setText("Edit skill");
+
+        skillsave_bt.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                if (title_tf.getText().isBlank() || detail_tf.getText().isBlank()) {
+                    resultMessage.setText("PLease fill out all fields");
+                    return;
+                }
+                try {
+                    editSkill(skill.getId(),selectedTitle);
+                    skillListView.setItems(skillsGetter(MainApplication.loggedInUser.getId()));
+                } catch (Exception e) {
+                    System.out.println("Editing skill error");
+                }
+            }
+        });
+
+    }
+
+    public void setDelete_bt(MouseEvent event) throws IOException {
+        if (selectedTitle == null){
+            return;
+        }
+        Skill skill = skillGetter(MainApplication.loggedInUser.getId(),selectedTitle);
+
+        title_tf.setVisible(true);
+        detail_tf.setVisible(true);
+        skillsave_bt.setVisible(false);
+
+        try {
+            deleteSkill(skill.getId(),selectedTitle);
+        } catch (Exception e) {
+            System.out.println("removing skill error");
+        }
+        skillListView.setItems(skillsGetter(MainApplication.loggedInUser.getId()));
+
+
+    }
+
+    public void setPlus_bt(MouseEvent event) throws IOException {
+
+        title_tf.setVisible(true);
+        title_tf.setText("");
+        detail_tf.setVisible(true);
+        detail_tf.setText("");
+        skillsave_bt.setVisible(true);
+        skillsave_bt.setText("Add to skills");
+
+        skillsave_bt.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                if (title_tf.getText().isBlank() || detail_tf.getText().isBlank()) {
+                    resultMessage.setText("PLease fill out all fields");
+                    return;
+                }
+                try {
+                    addtoSkills(new ActionEvent());
+                    skillListView.setItems(skillsGetter(MainApplication.loggedInUser.getId()));
+                } catch (Exception e) {
+                    System.out.println("adding skill error");
+                }
+            }
+        });
+
+    }
+
+    public void addtoSkills(ActionEvent event) throws IOException {
+        String response;
+
+
+        Skill skill = new Skill(MainApplication.loggedInUser.getId(), title_tf.getText(), detail_tf.getText());
+        //sending post request
+        URL url = new URL("http://localhost:8080/users/" + skill.getId() + "/skills/" + skill.getSkillTitle());
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = objectMapper.writeValueAsString(skill);
+
+        byte[] postDataBytes = json.getBytes();
+
+        con.setRequestMethod("POST");
+        con.setDoOutput(true);
+        con.getOutputStream().write(postDataBytes);
+
+        Reader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+        StringBuilder sb = new StringBuilder();
+        for (int c; (c = in.read()) > 0; )
+            sb.append((char) c);
+        response = sb.toString();
+
+        if (response.equals("this is done!")) {
+//            sceneCleaner();
+            resultMessage.setText("Skill added successfully");
+            title_tf.setText("");
+            detail_tf.setText("");
+
+        } else
+            resultMessage.setText("Server error");
+    }
+    public void deleteSkill(String id, String title) throws IOException{
+        try {
+            String response;
+            URL url = new URL("http://localhost:8080/users/" + id + "/skills/" + title);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestProperty("JWT", id);
+            con.setRequestMethod("DELETE");
+
+            int responseCode = con.getResponseCode();
+            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            String inputline;
+            StringBuffer response1 = new StringBuffer();
+            while ((inputline = in.readLine()) != null) {
+                response1.append(inputline);
+            }
+            in.close();
+            response = response1.toString();
+
+            if (response.equals("userSkill deleted")) {
+                resultMessage.setText("UserSkill deleted Successfully");
+            }
+            else {
+                System.out.println(response);
+            }
+        }
+        catch (ConnectException e) {
+            System.out.println("Connection failed");
+        }
+    }
+    public void editSkill(String id ,String previousTitle) throws IOException {
+        String response;
+        Skill skill = new Skill(id,title_tf.getText(),detail_tf.getText());
+        URL url = new URL("http://localhost:8080/users/" + id + "/skills/"+previousTitle);
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = objectMapper.writeValueAsString(skill);
+        System.out.println(json);
+        byte[] postDataBytes = json.getBytes();
+        con.setRequestMethod("PUT");
+        con.setDoOutput(true);
+        con.getOutputStream().write(postDataBytes);
+        Reader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+        StringBuilder sb = new StringBuilder();
+        for (int c; (c = in.read()) > 0; )
+            sb.append((char) c);
+        response = sb.toString();
+
+        if (response.equals("Skill Updated")) {
+            resultMessage.setText("Skill Updated");
+
+        } else {
+            resultMessage.setText("Server error during Skill update");
+        }
+    }
+    public ObservableList<String> skillsGetter(String id) throws IOException {
+
+        URL url = new URL("http://localhost:8080/users/" + id + "/skills");
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        con.setRequestMethod("GET");
+        int responseCode = con.getResponseCode();
+        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+        String inputline;
+        StringBuffer response1 = new StringBuffer();
+        while ((inputline = in.readLine()) != null) {
+            response1.append(inputline);
+        }
+        in.close();
+        String response = response1.toString();
+        JSONArray jsonObject = new JSONArray(response);
+        String[] userskills = toStringArray(jsonObject);
+
+
+        ObservableList<String> skillTitles = FXCollections.observableArrayList();
+
+        for (String jsonSkills : userskills) {
+            JSONObject obj = new JSONObject(jsonSkills);
+//            Skill skill = new Skill(obj.getString("id"), obj.getString("skillTitle"), obj.getString("SkillDetail"));
+            skillTitles.add(obj.getString("skillTitle"));
+        }
+        Collections.sort(skillTitles);
+        return skillTitles;
+
+    }
+
+    public Skill skillGetter(String id, String title) throws IOException {
+
+        URL url = new URL("http://localhost:8080/users/" + id + "/skills/" + title);
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        con.setRequestMethod("GET");
+        int responseCode = con.getResponseCode();
+        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+        String inputline;
+        StringBuffer response1 = new StringBuffer();
+        while ((inputline = in.readLine()) != null) {
+            response1.append(inputline);
+        }
+        in.close();
+        String response = response1.toString();
+        JSONObject obj = new JSONObject(response);
+        Skill skill = new Skill(obj.getString("id"), obj.getString("skillTitle"), obj.getString("skillDetail"));
+        return skill;
+    }
+
 
     public void setProfile_bt(ActionEvent event) throws Exception {
 

@@ -36,22 +36,22 @@
                   <Image url="@./pics/icons8-linked-in-144.png" />
                </image>
             </ImageView>
-            <Button mnemonicParsing="false" text="Home">
+            <Button focusTraversable="false" mnemonicParsing="false" text="Home">
                <HBox.margin>
                   <Insets top="8.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="Profile_bt" mnemonicParsing="false" onAction="#setProfile_bt" text="Profile">
+            <Button fx:id="Profile_bt" focusTraversable="false" mnemonicParsing="false" onAction="#setProfile_bt" text="Profile">
                <HBox.margin>
                   <Insets top="8.0" />
                </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" text="Search">
+            <Button focusTraversable="false" mnemonicParsing="false" text="Search">
                <HBox.margin>
                   <Insets top="8.0" />
                </HBox.margin>
             </Button>
-            <Button alignment="CENTER" mnemonicParsing="false" onAction="#logoutClicked" text="Log-Out" textAlignment="CENTER">
+            <Button alignment="CENTER" focusTraversable="false" mnemonicParsing="false" onAction="#logoutClicked" text="Log-Out" textAlignment="CENTER">
                <HBox.margin>
                   <Insets left="210.0" top="8.0" />
                </HBox.margin>
@@ -137,28 +137,28 @@
                            <children>
                               <HBox layoutX="200.0" layoutY="94.0" prefHeight="287.2" prefWidth="600.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
                                  <children>
-                                    <VBox prefHeight="200.0" prefWidth="100.0">
+                                    <VBox prefHeight="274.0" prefWidth="298.0">
                                        <children>
-                                          <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Skills" textAlignment="CENTER" />
-                                          <ListView prefHeight="270.0" prefWidth="176.0" />
+                                          <Label alignment="CENTER" focusTraversable="false" maxWidth="1.7976931348623157E308" text="Skills" textAlignment="CENTER" />
+                                          <ListView fx:id="skillListView" prefHeight="257.0" prefWidth="218.0" />
                                        </children>
                                     </VBox>
                                     <VBox alignment="BOTTOM_LEFT" prefHeight="200.0" prefWidth="100.0">
                                        <children>
-                                          <FontAwesomeIcon fill="RED" glyphName="REMOVE" selectionStart="1" />
-                                          <FontAwesomeIcon fill="#ffae00" glyphName="EDIT" />
-                                          <FontAwesomeIcon fill="#2bff00" glyphName="PLUS" />
+                                          <FontAwesomeIcon fx:id="delete_bt" fill="RED" glyphName="REMOVE" onMouseClicked="#setDelete_bt" selectionStart="1" />
+                                          <FontAwesomeIcon fx:id="edit_bt" fill="#ffae00" glyphName="EDIT" onMouseClicked="#setEdit_bt" />
+                                          <FontAwesomeIcon fx:id="plus_bt" fill="#2bff00" glyphName="PLUS" onMouseClicked="#setPlus_bt" />
                                        </children>
                                     </VBox>
                                     <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                                        <children>
-                                          <TextField promptText="Skill Title">
+                                          <TextField fx:id="title_tf" promptText="Skill Title">
                                              <VBox.margin>
                                                 <Insets bottom="4.0" top="12.0" />
                                              </VBox.margin>
                                           </TextField>
-                                          <TextArea prefHeight="200.0" prefWidth="200.0" promptText="Details" />
-                                          <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Add" textAlignment="CENTER">
+                                          <TextArea fx:id="detail_tf" prefHeight="200.0" prefWidth="200.0" promptText="Details" />
+                                          <Button fx:id="skillsave_bt" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Add" textAlignment="CENTER">
                                              <VBox.margin>
                                                 <Insets top="5.0" />
                                              </VBox.margin>

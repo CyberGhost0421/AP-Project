@@ -1,7 +1,7 @@
 package utils;
 
 public class JwtAuth {
-    private static final String secret = "DrHosseinZynali";
+    private static final String secret = "AmirKH";
     public static String jws(String sub) {
         char[] arr = new char[sub.length() + 1];
         arr[0] = '@';

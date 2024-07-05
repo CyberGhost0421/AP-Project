@@ -1,6 +1,5 @@
 package com.linkedin.clientapp;
 
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Follow{

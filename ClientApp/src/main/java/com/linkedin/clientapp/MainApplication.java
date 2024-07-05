@@ -28,9 +28,9 @@ public class MainApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-        if (!tokenFileReader().isBlank()){
+        if (!tokenFileReader().isBlank()) {
             userToken = tokenFileReader();
-            System.out.println(userToken);
+            System.out.println("loggedIn userToken : " + userToken);
         }
 
         currentStage = stage;
@@ -38,10 +38,10 @@ public class MainApplication extends Application {
         if (userToken.isEmpty()) {
             currentScene = new Scene((new FXMLLoader(MainApplication.class.getResource("SignIn.fxml"))).load());
 
-        } else if (getUserbyToken(userToken)!=null) {
+        } else if (getUserbyToken(userToken) != null) {
             loggedInUser = getUserbyToken(userToken);
             currentScene = new Scene((new FXMLLoader(MainApplication.class.getResource("Profile.fxml"))).load());
-        }else{
+        } else {
             System.out.println("finding user error");
             return;
         }
@@ -52,40 +52,43 @@ public class MainApplication extends Application {
         stage.setScene(currentScene);
         stage.show();
     }
-    public void logedOut(){
+
+    public void logedOut() {
         searchedUser = null;
         loggedInUser = null;
         userToken = "";
         try {
             tokenFileWriter("");
-        }catch (IOException e){
+        } catch (IOException e) {
             System.out.println("token File not found");
         }
     }
-    public String tokenFileReader() throws IOException{
+
+    public String tokenFileReader() throws IOException {
         int ch;
         String token = "";
         try {
             FileReader fr = new FileReader("userToken.txt");
             StringBuilder sb = new StringBuilder();
-            while ((ch=fr.read())!=-1){
-                sb.append((char)ch);
+            while ((ch = fr.read()) != -1) {
+                sb.append((char) ch);
             }
             token = sb.toString();
             fr.close();
-        }catch (IOException fe){
+        } catch (IOException fe) {
             System.out.println("file not found");
         }
         return token;
     }
-    public void tokenFileWriter(String token) throws IOException{
+
+    public void tokenFileWriter(String token) throws IOException {
         int ch;
         try {
             FileWriter fw = new FileWriter("userToken.txt");
             for (int i = 0; i < token.length(); i++)
                 fw.write(token.charAt(i));
             fw.close();
-        }catch (IOException fe){
+        } catch (IOException fe) {
             System.out.println("file not found");
         }
     }
@@ -131,7 +134,7 @@ public class MainApplication extends Application {
 
             ArrayList<String> usersIDArray = new ArrayList<>();
             ObservableList<String> fullNameplusID = FXCollections.observableArrayList();
-            User tempUser=new User();
+            User tempUser = new User();
             for (String jsonUser : users) {
                 JSONObject obj = new JSONObject(jsonUser);
                 if (obj.getString("token").equals(user_token)) {

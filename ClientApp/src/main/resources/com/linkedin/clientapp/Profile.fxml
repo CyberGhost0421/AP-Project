@@ -5,6 +5,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -32,22 +34,22 @@
                   <Image url="@./pics/icons8-linked-in-144.png" />
                </image>
             </ImageView>
-            <Button fx:id="home_bt" mnemonicParsing="false" text="Home">
+            <Button fx:id="home_bt" focusTraversable="false" mnemonicParsing="false" text="Home">
                <HBox.margin>
                   <Insets top="8.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="Profile_bt" mnemonicParsing="false" onAction="#setProfile_bt" text="Profile">
+            <Button fx:id="Profile_bt" focusTraversable="false" mnemonicParsing="false" onAction="#setProfile_bt" text="Profile">
                <HBox.margin>
                   <Insets top="8.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="search_bt" mnemonicParsing="false" onMouseClicked="#setSearch_bt" text="Search">
+            <Button fx:id="search_bt" focusTraversable="false" mnemonicParsing="false" onMouseClicked="#setSearch_bt" text="Search">
                <HBox.margin>
                   <Insets top="8.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="logout_bt" alignment="CENTER" mnemonicParsing="false" onAction="#logoutClicked" text="Log-Out" textAlignment="CENTER">
+            <Button fx:id="logout_bt" alignment="CENTER" focusTraversable="false" mnemonicParsing="false" onAction="#logoutClicked" text="Log-Out" textAlignment="CENTER">
                <HBox.margin>
                   <Insets left="210.0" top="8.0" />
                </HBox.margin>
@@ -76,8 +78,8 @@
                         <Insets left="6.0" />
                      </padding>
                   </VBox>
-                  <Button fx:id="message_bt" alignment="CENTER" layoutX="457.0" layoutY="43.0" mnemonicParsing="false" text="Message" />
-                  <ToggleButton fx:id="Follow_bt" layoutX="527.0" layoutY="43.0" mnemonicParsing="false" text="Follow" />
+                  <Button fx:id="message_bt" alignment="CENTER" focusTraversable="false" layoutX="457.0" layoutY="43.0" mnemonicParsing="false" text="Message" />
+                  <ToggleButton fx:id="Follow_bt" focusTraversable="false" layoutX="527.0" layoutY="43.0" mnemonicParsing="false" text="Follow" />
                   <GridPane alignment="CENTER" layoutX="300.0" layoutY="17.0" prefHeight="50.0" prefWidth="126.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -105,12 +107,28 @@
                      <children>
                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="5.0">
                            <children>
-                              <Label alignment="CENTER" text="Skills" textAlignment="CENTER" />
-                              <ListView maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="219.0" prefWidth="90.0" />
+                              <Label alignment="CENTER" focusTraversable="false" text="Skills" textAlignment="CENTER" />
+                              <ListView fx:id="skillListView" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="219.0" prefWidth="90.0" />
                            </children>
                            <padding>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </padding>
+                        </VBox>
+                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <TextField fx:id="title_tf" editable="false" focusTraversable="false" promptText="Skill Title" visible="false">
+                                 <VBox.margin>
+                                    <Insets bottom="4.0" top="12.0" />
+                                 </VBox.margin>
+                              </TextField>
+                              <TextArea fx:id="detail_tf" editable="false" focusTraversable="false" prefHeight="200.0" prefWidth="200.0" promptText="Details" visible="false" />
+                           </children>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <HBox.margin>
+                              <Insets bottom="5.0" top="15.0" />
+                           </HBox.margin>
                         </VBox>
                      </children>
                   </HBox>

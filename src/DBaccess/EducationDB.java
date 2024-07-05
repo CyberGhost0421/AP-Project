@@ -39,7 +39,7 @@ public class EducationDB {
     }
 
     public Education getEducation(String userId) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("SELECT * FROM users WHERE id = ?");
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM educations WHERE id = ?");
         statement.setString(1, userId);
         ResultSet resultSet = statement.executeQuery();
 
@@ -76,8 +76,8 @@ public class EducationDB {
     }
 
     public void deleteEducation(Education education) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("SELECT * FROM educations WHERE id = ?");
+        PreparedStatement statement = connection.prepareStatement("DELETE FROM educations WHERE id = ?");
         statement.setString(1, education.getId());
-        ResultSet resultSet = statement.executeQuery();
+        statement.executeUpdate();
     }
 }

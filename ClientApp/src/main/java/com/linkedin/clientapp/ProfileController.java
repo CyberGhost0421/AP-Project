@@ -1,8 +1,11 @@
 package com.linkedin.clientapp;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -21,13 +24,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.shape.Circle;
 
 import static java.lang.System.in;
@@ -68,6 +69,14 @@ public class ProfileController implements Initializable {
     private Label username_tf;
     @FXML
     private ImageView image_view;
+    @FXML
+    private TextArea detail_tf;
+    @FXML
+    private TextField title_tf;
+    @FXML
+    private ListView skillListView;
+
+    String selectedTitle;
 
     User searchedUser = MainApplication.searchedUser;
 
@@ -75,6 +84,7 @@ public class ProfileController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
         try {
             if (MainApplication.searchedUser == null || searchedUser.getId().equals(MainApplication.loggedInUser.getId())) {
                 Follow_bt.setVisible(false);
@@ -90,6 +100,24 @@ public class ProfileController implements Initializable {
                 image_view.setFitHeight(75);
                 image_view.setFitHeight(75);
                 profile_img.setFill(new ImagePattern(AvatarImage));
+
+                skillListView.setItems(skillsGetter(thisuser.getId()));
+                skillListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        selectedTitle = skillListView.getSelectionModel().getSelectedItem().toString();
+                        try {
+                            Skill skillSelected = skillGetter(thisuser.getId(),selectedTitle);
+                            detail_tf.setText(skillSelected.getSkillDetail());
+                            title_tf.setText(selectedTitle);
+                            title_tf.setVisible(true);
+                            detail_tf.setVisible(true);
+
+                        } catch (IOException e) {
+                            System.out.println("finding user Skill failed");
+                        }
+                    }
+                });
 
 //            profile_img.path
             } else {
@@ -109,15 +137,31 @@ public class ProfileController implements Initializable {
                 image_view.setFitHeight(75);
                 profile_img.setFill(new ImagePattern(AvatarImage));
 
+                skillListView.setItems(skillsGetter(searchedUser.getId()));
+                skillListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        selectedTitle = skillListView.getSelectionModel().getSelectedItem().toString();
+                        try {
+                            Skill skillSelected = skillGetter(search_bt.getId(),selectedTitle);
+                            detail_tf.setText(skillSelected.getSkillDetail());
+                            title_tf.setText(selectedTitle);
+                            title_tf.setVisible(true);
+                            detail_tf.setVisible(true);
+
+                        } catch (IOException e) {
+                            System.out.println("finding user Skill failed");
+                        }
+                    }
+                });
+
 //            profile_img.path
 
             }
         } catch (IOException exception) {
             System.out.println("Unable to get user Data");
         }
-
     }
-
     private void setAction() {
         message_bt.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -140,7 +184,6 @@ public class ProfileController implements Initializable {
             public void handle(ActionEvent actionEvent) {
                 try {
                     if (!IsFollowing(MainApplication.loggedInUser, searchedUser)) {
-                        System.out.println(MainApplication.loggedInUser.getId() + " wants to follow " + searchedUser.getId());
                         try {
                             String response;
                             URL url = new URL("http://localhost:8080/follows/" + MainApplication.loggedInUser.getId() + "/" + searchedUser.getId());
@@ -169,7 +212,6 @@ public class ProfileController implements Initializable {
                             System.out.println("Connection failed");
                         }
                     } else {
-                        System.out.println(MainApplication.loggedInUser.getId() + " wants to unfollow " + searchedUser.getId());
 
                         try {
                             System.out.println("checking2");
@@ -425,6 +467,55 @@ public class ProfileController implements Initializable {
             System.out.println("Connection failed");
             return 0;
         }
+    }
+
+    public ObservableList<String> skillsGetter(String id) throws IOException {
+
+        URL url = new URL("http://localhost:8080/users/" + id + "/skills");
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        con.setRequestMethod("GET");
+        int responseCode = con.getResponseCode();
+        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+        String inputline;
+        StringBuffer response1 = new StringBuffer();
+        while ((inputline = in.readLine()) != null) {
+            response1.append(inputline);
+        }
+        in.close();
+        String response = response1.toString();
+        JSONArray jsonObject = new JSONArray(response);
+        String[] userskills = toStringArray(jsonObject);
+
+
+        ObservableList<String> skillTitles = FXCollections.observableArrayList();
+
+        for (String jsonSkills : userskills) {
+            JSONObject obj = new JSONObject(jsonSkills);
+//            Skill skill = new Skill(obj.getString("id"), obj.getString("skillTitle"), obj.getString("SkillDetail"));
+            skillTitles.add(obj.getString("skillTitle"));
+        }
+        Collections.sort(skillTitles);
+        return skillTitles;
+
+    }
+
+    public Skill skillGetter(String id, String title) throws IOException {
+
+        URL url = new URL("http://localhost:8080/users/" + id + "/skills/" + title);
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        con.setRequestMethod("GET");
+        int responseCode = con.getResponseCode();
+        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+        String inputline;
+        StringBuffer response1 = new StringBuffer();
+        while ((inputline = in.readLine()) != null) {
+            response1.append(inputline);
+        }
+        in.close();
+        String response = response1.toString();
+        JSONObject obj = new JSONObject(response);
+        Skill skill = new Skill(obj.getString("id"), obj.getString("skillTitle"), obj.getString("skillDetail"));
+        return skill;
     }
 
     public static String[] toStringArray(JSONArray array) {

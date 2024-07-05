@@ -6,6 +6,7 @@ module com.linkedin.clientapp {
     requires json;
     requires com.jfoenix;
     requires java.sql;
+    requires fontawesomefx;
 
     opens com.linkedin.clientapp to javafx.fxml;
     exports com.linkedin.clientapp;

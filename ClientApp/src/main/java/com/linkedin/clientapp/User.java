@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
 
+//import java.sql.Date;
+
 public class User {
     @JsonProperty("id")
     private String id;
@@ -178,13 +180,13 @@ public class User {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
-                ", phoneNumberType=" + phoneNumberType +  ':' +
+                ", phoneNumberType=" + phoneNumberType + ':' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", password='" + password + '\'' +
                 ", country='" + country + '\'' +
-                ", city=" + city +  '\'' +
-                ", birthday=" + birthday +  '\'' +
-                ", createdAt=" + userCreatedAt +  '\'' +
+                ", city=" + city + '\'' +
+                ", birthday=" + birthday + '\'' +
+                ", createdAt=" + userCreatedAt + '\'' +
                 ", socialLink=" + socialLink +
                 '}';
     }

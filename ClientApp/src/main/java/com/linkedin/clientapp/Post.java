@@ -1,6 +1,7 @@
 package com.linkedin.clientapp;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.sql.Date;
 import java.util.ArrayList;
 
@@ -162,7 +163,7 @@ public class Post {
 
     @Override
     public String toString() {
-        return "Tweet{" +
+        return "Post{" +
                 "id='" + id + '\'' +
                 ", writerId='" + writerId + '\'' +
                 ", ownerId='" + ownerId + '\'' +
