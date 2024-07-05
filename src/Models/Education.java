@@ -1,7 +1,7 @@
 package Models;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Education {
     @JsonProperty("id")
@@ -106,7 +106,7 @@ public class Education {
                 ", institute='" + institute + '\'' +
                 ", study='" + study + '\'' +
                 ", startedDate='" + startedDate + '\'' +
-                ", finishedDate=" + finishedDate + ':' +
+                ", finishedDate='" + finishedDate + '\'' +
                 ", grade='" + grade + '\'' +
                 ", activities='" + activities + '\'' +
                 ", description='" + description + '\'' +

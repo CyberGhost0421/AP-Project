@@ -156,7 +156,7 @@ public class SignUpController implements Initializable {
                     if (!response.equals("No User")) {
                         resultMessage.setText("Username exist");
                     } else {
-                        DateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+                        DateFormat format = new SimpleDateFormat("MM-dd-yyyy");
                         Date date1 = format.parse(date);
                         User user = new User(username_tf.getText(), firstname_tf.getText(), lastname_tf.getText(), email_tf.getText(),PhoneNumberType ,phonenumber_tf.getText(), password_tf.getText(), Country, city_tf.getText(),date1, "",new Date());
                         //sending post request

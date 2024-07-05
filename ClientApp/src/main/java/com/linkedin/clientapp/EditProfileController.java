@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
+import javafx.scene.transform.Shear;
 import javafx.stage.FileChooser;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -37,7 +38,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.file.Files;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -50,20 +53,10 @@ import static java.lang.System.in;
 import static java.lang.System.setOut;
 
 public class EditProfileController implements Initializable {
+
     @FXML
     private Label DeleteAccount_bt;
-    @FXML
-    private Button skillsave_bt;
-    @FXML
-    private ListView skillListView;
-    @FXML
-    private TextField title_tf;
-    @FXML
-    private FontAwesomeIcon plus_bt;
-    @FXML
-    private TextArea detail_tf;
-    @FXML
-    private FontAwesomeIcon delete_bt;
+
     @FXML
     private CheckBox PV_checkbox;
 
@@ -71,17 +64,31 @@ public class EditProfileController implements Initializable {
     private Button Profile_bt;
 
     @FXML
+    private TextArea activities_tf;
+
+    @FXML
     private TextField city_tf;
 
     @FXML
     private ChoiceBox country_cb;
-    @FXML
-    private Label resultMessage;
+
     @FXML
     private PasswordField currentPassword_tf;
 
     @FXML
     private DatePicker dateofbirth_tf;
+
+    @FXML
+    private FontAwesomeIcon delete_bt;
+
+    @FXML
+    private TextArea description_tf;
+
+    @FXML
+    private TextArea detail_tf;
+
+    @FXML
+    private FontAwesomeIcon edit_bt;
 
     @FXML
     private TextField email2_tf;
@@ -93,7 +100,16 @@ public class EditProfileController implements Initializable {
     private Button fileChooser_bt;
 
     @FXML
+    private TextField finishedDate_tf;
+
+    @FXML
     private TextField firstname_tf;
+
+    @FXML
+    private TextField grade_tf;
+
+    @FXML
+    private TextField institute_tf;
 
     @FXML
     private TextField lastname_tf;
@@ -108,13 +124,34 @@ public class EditProfileController implements Initializable {
     private TextField phoneNumber_tf;
 
     @FXML
+    private FontAwesomeIcon plus_bt;
+
+    @FXML
     private PasswordField rePassword_tf;
+
+    @FXML
+    private Label resultMessage;
 
     @FXML
     private Button save_bt;
 
     @FXML
+    private ListView skillListView;
+
+    @FXML
+    private Button skillsave_bt;
+
+    @FXML
     private TextField sociallink_tf;
+
+    @FXML
+    private TextField startedDate_tf;
+
+    @FXML
+    private TextField study_tf;
+
+    @FXML
+    private TextField title_tf;
 
     @FXML
     private TextField username2_tf;
@@ -122,12 +159,14 @@ public class EditProfileController implements Initializable {
     @FXML
     private TextField username_tf;
     private File AvatarFile = null;
-    String dateofbirthselected;
+
     String country;
     String phoneNumberType;
     String newPass;
     String socialLink;
     String selectedTitle;
+    LocalDate dateofbirthselected;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
@@ -136,8 +175,16 @@ public class EditProfileController implements Initializable {
             ObservableList<String> list2 = FXCollections.observableArrayList("Mobile", "Work", "Home");
             phoneNumberType_cb.setItems(list2);
 
+            Instant instant = MainApplication.loggedInUser.getBirthday().toInstant();
+            // Step 2: Convert java.time.Instant to java.time.ZoneId
+            ZoneId zoneId = ZoneId.systemDefault();
+            // Step 3: Convert java.time.Instant to java.time.LocalDate
+            LocalDate localDate = instant.atZone(zoneId).toLocalDate();
+            dateofbirth_tf.setValue(localDate);
+            dateofbirthselected = localDate;
+
+
             country = MainApplication.loggedInUser.getCountry();
-            dateofbirthselected = MainApplication.loggedInUser.getBirthday().toString();
             phoneNumberType = MainApplication.loggedInUser.getPhoneNumberType();
             newPass = MainApplication.loggedInUser.getPassword();
 
@@ -159,7 +206,7 @@ public class EditProfileController implements Initializable {
                         selectedTitle = skillListView.getSelectionModel().getSelectedItem().toString();
                         String id = MainApplication.loggedInUser.getId();
                         try {
-                            Skill skillSelected = skillGetter(id,selectedTitle);
+                            Skill skillSelected = skillGetter(id, selectedTitle);
                             detail_tf.setText(skillSelected.getSkillDetail());
                             title_tf.setText(selectedTitle);
                             title_tf.setVisible(true);
@@ -184,6 +231,10 @@ public class EditProfileController implements Initializable {
             email_tf.setText(thisuser.getEmail());
             email2_tf.setText(thisuser.getEmail());
             sociallink_tf.setText(thisuser.getSocialLink());
+
+            setEducationToEditS();
+
+
 //            PV_checkbox
 
         } catch (IOException exception) {
@@ -193,7 +244,8 @@ public class EditProfileController implements Initializable {
     }
 
     public void getDate(ActionEvent event) {
-        dateofbirthselected = dateofbirth_tf.getValue().toString();
+        dateofbirthselected = dateofbirth_tf.getValue();
+        System.out.println("get date "+dateofbirthselected);
     }
 
     public void getPhoneNumberType(ActionEvent event) {
@@ -209,6 +261,10 @@ public class EditProfileController implements Initializable {
 
             // main app user
             if (firstname_tf.getText().isBlank() || lastname_tf.getText().isBlank() || phoneNumber_tf.getText().isBlank() || phoneNumberType_cb.getValue().toString().isBlank() || city_tf.getText().isBlank() || country_cb.getValue().toString().isBlank() || email_tf.getText().isBlank() || email2_tf.getText().isBlank()) {
+                resultMessage.setText("please enter all fields");
+                return;
+            }
+            if (study_tf.getText().isBlank() || institute_tf.getText().isBlank() || grade_tf.getText().isBlank() || startedDate_tf.getText().isBlank() || finishedDate_tf.getText().isBlank() || activities_tf.getText().isBlank() || description_tf.getText().isBlank()) {
                 resultMessage.setText("please enter all fields");
                 return;
             }
@@ -245,11 +301,10 @@ public class EditProfileController implements Initializable {
                 try {
                     String response;
 
-                    DateFormat format = new SimpleDateFormat("yyyy-mm-dd");
-                    Date date1 = format.parse(dateofbirthselected);
-                    System.out.println(dateofbirthselected);
+                    Date utilDate = Date.from(dateofbirthselected.atStartOfDay(ZoneId.systemDefault()).toInstant());
+                    System.out.println(utilDate);
 
-                    User user = new User(MainApplication.loggedInUser.getId(), firstname_tf.getText(), lastname_tf.getText(), email_tf.getText(), phoneNumberType, phoneNumber_tf.getText(), newPass, country, city_tf.getText(), date1, socialLink, MainApplication.loggedInUser.getUserCreatedAt());
+                    User user = new User(MainApplication.loggedInUser.getId(), firstname_tf.getText(), lastname_tf.getText(), email_tf.getText(), phoneNumberType, phoneNumber_tf.getText(), newPass, country, city_tf.getText(), utilDate, socialLink, MainApplication.loggedInUser.getUserCreatedAt());
 
 
                     URL url = new URL("http://localhost:8080/users/" + username_tf.getText());
@@ -273,6 +328,7 @@ public class EditProfileController implements Initializable {
                         MainApplication.loggedInUser = getUser(MainApplication.loggedInUser.getId());
                         MainApplication app = new MainApplication();
                         app.changeCurrentScene("EditProfile");
+
 
                     } else {
                         resultMessage.setText("Server error");
@@ -309,15 +365,38 @@ public class EditProfileController implements Initializable {
                     System.out.println("Connection failed");
                 }
             }
+
+            saveEducation(MainApplication.loggedInUser.getId());
+            setEducationToEditS();
+
         }
 
     }
 
+    public java.sql.Date dateFormatter(String date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+
+        try {
+            // Parse the string date to a java.util.Date object
+            Date utilDate = sdf.parse(date);
+
+            // Convert java.util.Date to java.sql.Date
+            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+            sdf.setLenient(false);
+            // Print the result
+            return sqlDate;
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public void setEdit_bt(MouseEvent event) throws IOException {
-        if (selectedTitle == null){
+        if (selectedTitle == null) {
             return;
         }
-        Skill skill = skillGetter(MainApplication.loggedInUser.getId(),selectedTitle);
+        Skill skill = skillGetter(MainApplication.loggedInUser.getId(), selectedTitle);
         title_tf.setVisible(true);
         title_tf.setText(selectedTitle);
         detail_tf.setVisible(true);
@@ -333,7 +412,7 @@ public class EditProfileController implements Initializable {
                     return;
                 }
                 try {
-                    editSkill(skill.getId(),selectedTitle);
+                    editSkill(skill.getId(), selectedTitle);
                     skillListView.setItems(skillsGetter(MainApplication.loggedInUser.getId()));
                 } catch (Exception e) {
                     System.out.println("Editing skill error");
@@ -344,17 +423,17 @@ public class EditProfileController implements Initializable {
     }
 
     public void setDelete_bt(MouseEvent event) throws IOException {
-        if (selectedTitle == null){
+        if (selectedTitle == null) {
             return;
         }
-        Skill skill = skillGetter(MainApplication.loggedInUser.getId(),selectedTitle);
+        Skill skill = skillGetter(MainApplication.loggedInUser.getId(), selectedTitle);
 
         title_tf.setVisible(true);
         detail_tf.setVisible(true);
         skillsave_bt.setVisible(false);
 
         try {
-            deleteSkill(skill.getId(),selectedTitle);
+            deleteSkill(skill.getId(), selectedTitle);
         } catch (Exception e) {
             System.out.println("removing skill error");
         }
@@ -396,7 +475,7 @@ public class EditProfileController implements Initializable {
 
         Skill skill = new Skill(MainApplication.loggedInUser.getId(), title_tf.getText(), detail_tf.getText());
         //sending post request
-        URL url = new URL("http://localhost:8080/users/" + skill.getId() + "/skills/" + skill.getSkillTitle());
+        URL url = new URL("http://localhost:8080/users/" + skill.getId() + "/skills" );
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         ObjectMapper objectMapper = new ObjectMapper();
         String json = objectMapper.writeValueAsString(skill);
@@ -422,7 +501,8 @@ public class EditProfileController implements Initializable {
         } else
             resultMessage.setText("Server error");
     }
-    public void deleteSkill(String id, String title) throws IOException{
+
+    public void deleteSkill(String id, String title) throws IOException {
         try {
             String response;
             URL url = new URL("http://localhost:8080/users/" + id + "/skills/" + title);
@@ -442,19 +522,18 @@ public class EditProfileController implements Initializable {
 
             if (response.equals("userSkill deleted")) {
                 resultMessage.setText("UserSkill deleted Successfully");
-            }
-            else {
+            } else {
                 System.out.println(response);
             }
-        }
-        catch (ConnectException e) {
+        } catch (ConnectException e) {
             System.out.println("Connection failed");
         }
     }
-    public void editSkill(String id ,String previousTitle) throws IOException {
+
+    public void editSkill(String id, String previousTitle) throws IOException {
         String response;
-        Skill skill = new Skill(id,title_tf.getText(),detail_tf.getText());
-        URL url = new URL("http://localhost:8080/users/" + id + "/skills/"+previousTitle);
+        Skill skill = new Skill(id, title_tf.getText(), detail_tf.getText());
+        URL url = new URL("http://localhost:8080/users/" + id + "/skills/" + previousTitle);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         ObjectMapper objectMapper = new ObjectMapper();
         String json = objectMapper.writeValueAsString(skill);
@@ -476,6 +555,7 @@ public class EditProfileController implements Initializable {
             resultMessage.setText("Server error during Skill update");
         }
     }
+
     public ObservableList<String> skillsGetter(String id) throws IOException {
 
         URL url = new URL("http://localhost:8080/users/" + id + "/skills");
@@ -510,6 +590,7 @@ public class EditProfileController implements Initializable {
 
         URL url = new URL("http://localhost:8080/users/" + id + "/skills/" + title);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
+
         con.setRequestMethod("GET");
         int responseCode = con.getResponseCode();
         BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
@@ -575,6 +656,84 @@ public class EditProfileController implements Initializable {
             return user;
         } catch (ConnectException e) {
             return new User("", "", "", "", "", "", "", "", "", new Date(), "", new Date());
+        }
+    }
+
+    public static Education getEducation(String id) throws IOException {
+        try {
+            URL url = new URL("http://localhost:8080/users/" + id + "/educations");
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+            int responseCode = con.getResponseCode();
+            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            String inputline;
+            StringBuffer response1 = new StringBuffer();
+            while ((inputline = in.readLine()) != null) {
+                response1.append(inputline);
+            }
+            in.close();
+            String response = response1.toString();
+            System.out.println(response);  /////
+            if (!response.equals("No Education")) {
+                JSONObject obj = new JSONObject(response);
+                Education education = new Education(obj.getString("id"), obj.getString("institute"), obj.getString("study"), new java.sql.Date(obj.getLong("startedDate")), new java.sql.Date(obj.getLong("finishedDate")), obj.getString("grade"), obj.getString("activities"), obj.getString("description"));
+
+                return education;
+            }
+            return null;
+        } catch (ConnectException e) {
+            return null;
+//            return new Education("", "", "", null, null, "", "", "");
+        }
+    }
+    public void setEducationToEditS()throws IOException{
+        {
+            Education thisEducation = getEducation(MainApplication.loggedInUser.getId());
+            if (thisEducation != null) {
+                study_tf.setText(thisEducation.getStudy());
+                institute_tf.setText(thisEducation.getInstitute());
+                grade_tf.setText(thisEducation.getGrade());
+                activities_tf.setText(thisEducation.getActivities());
+                description_tf.setText(thisEducation.getDescription());
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+
+                finishedDate_tf.setText(sdf.format(thisEducation.getFinishedDate()));
+                startedDate_tf.setText(sdf.format(thisEducation.getStartedDate()));
+            }
+        }
+    }
+    public void saveEducation(String id) throws IOException {
+        String response;
+
+        try {
+            Education education = new Education(id, institute_tf.getText(), study_tf.getText(), dateFormatter(startedDate_tf.getText()), dateFormatter(finishedDate_tf.getText()), grade_tf.getText(), activities_tf.getText(), description_tf.getText());
+
+            //sending post request
+            URL url = new URL("http://localhost:8080/users/" + id + "/educations");
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            ObjectMapper objectMapper = new ObjectMapper();
+            String json = objectMapper.writeValueAsString(education);
+
+            byte[] postDataBytes = json.getBytes();
+
+            con.setRequestMethod("POST");
+            con.setDoOutput(true);
+            con.getOutputStream().write(postDataBytes);
+
+            Reader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            StringBuilder sb = new StringBuilder();
+            for (int c; (c = in.read()) > 0; )
+                sb.append((char) c);
+            response = sb.toString();
+
+            if (response.equals("this is done!")) {
+                resultMessage.setText("Education added successfully");
+
+            } else
+                resultMessage.setText("Server error");
+
+        } catch (Exception e) {
+            System.out.println("making education to save failed");
         }
     }
 

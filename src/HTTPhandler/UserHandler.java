@@ -34,7 +34,7 @@ public class UserHandler implements HttpHandler {
                 if (splittedPath.length == 2) {
                     try {
                         response = userController.getUsers();
-                        System.out.println(response);
+//                        System.out.println(response);
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
@@ -49,7 +49,7 @@ public class UserHandler implements HttpHandler {
                     }
                 } else if (splittedPath.length == 4) {
 
-                    String userId = splittedPath[splittedPath.length - 2];
+                    String userId = splittedPath[2];
                     if (splittedPath[splittedPath.length - 1].equals("skills")) {
                         try {
                             response = skillController.getSkillsById(userId);
@@ -62,8 +62,8 @@ public class UserHandler implements HttpHandler {
                     } else if (splittedPath[splittedPath.length - 1].equals("educations")) {
                         try {
                             response = educationController.getEducationById(userId);
-                            if (response == null) response = "No Education";
-                            System.out.println(response);
+                            if (response.equals("No Education")) response = "No Education";
+//                            System.out.println(response);
 
                         } catch (SQLException e) {
                             e.printStackTrace();
@@ -77,8 +77,6 @@ public class UserHandler implements HttpHandler {
                     try {
                         response = skillController.getSkillById(userId, skillTitle);
                         if (response == null) response = "No Education";
-                        System.out.println(response);
-                        System.out.println("skill willl be " + response);
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
@@ -95,11 +93,10 @@ public class UserHandler implements HttpHandler {
                 }
                 requestBody.close();
 
-                if (splittedPath.length == 5) {
+                if (splittedPath.length >= 4) {
                     if (splittedPath[3].equals("skills")) {
                         String newSkill = body.toString();
                         JSONObject jsonObject = new JSONObject(newSkill);
-                        System.out.println("newskill " + newSkill);
                         try {
                             skillController.createSkill(jsonObject.getString("id"), jsonObject.getString("skillTitle"), jsonObject.getString("skillDetail"));
                         } catch (Exception e) {
@@ -207,9 +204,16 @@ public class UserHandler implements HttpHandler {
                         e.printStackTrace();
                     }
                 } else if (splittedPath.length == 5) {
+                    requestBody = exchange.getRequestBody();
+                    reader = new BufferedReader(new InputStreamReader(requestBody));
+                    body = new StringBuilder();
+                    while ((line = reader.readLine()) != null) {
+                        body.append(line);
+                    }
+                    requestBody.close();
+
                     String userId = splittedPath[2];
                     String Title = splittedPath[4];
-
                     try {
                         skillController.deleteSkill(userId, Title);
                         response = "userSkill deleted";

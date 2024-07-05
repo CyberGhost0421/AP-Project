@@ -17,7 +17,7 @@ public class EducationController {
         educationDB = new EducationDB();
     }
 
-    public void createEducation(String id, String institute, String study, java.util.Date startedDate, java.util.Date finishedDate, String grade, String activities, String description) throws SQLException {
+    public void createEducation(String id, String institute, String study, Date startedDate, Date finishedDate, String grade, String activities, String description) throws SQLException {
         Education education = new Education(id, institute, study, startedDate, finishedDate, grade, activities, description);
 
         if (isEducationExists(id))
@@ -32,17 +32,17 @@ public class EducationController {
         educationDB.deleteEducation(education);
     }
 
-    public void updateEducation(String id, String institute, String study, java.util.Date startedDate, java.util.Date finishedDate, String grade, String activities, String description) throws SQLException {
+    public void updateEducation(String id, String institute, String study,Date startedDate, Date finishedDate, String grade, String activities, String description) throws SQLException {
         Education education = new Education(id, institute, study, startedDate, finishedDate, grade, activities, description);
         educationDB.updateEducation(education);
     }
 
     public String getEducationById(String id) throws SQLException, JsonProcessingException {
-        Education education = educationDB.getEducation(id);
-        if (education == null)
+
+        if (educationDB.getEducation(id) == null)
             return "No Education";
         ObjectMapper objectMapper = new ObjectMapper();
-        String response = objectMapper.writeValueAsString(education);
+        String response = objectMapper.writeValueAsString(educationDB.getEducation(id));
         return response;
     }
 

@@ -130,6 +130,32 @@
                               <Insets bottom="5.0" top="15.0" />
                            </HBox.margin>
                         </VBox>
+                        <AnchorPane fx:id="education_anchor" prefHeight="251.0" prefWidth="382.0">
+                           <children>
+                              <Label layoutX="14.0" layoutY="21.0" text="Study" />
+                              <Label layoutX="13.0" layoutY="48.0" text="Institute" />
+                              <Label layoutX="12.0" layoutY="79.0" text="Started Date" />
+                              <Label layoutX="12.0" layoutY="99.0" text="Finished Date" />
+                              <Label layoutX="12.0" layoutY="126.0" text="Grade" />
+                              <Label fx:id="activities_tf" layoutX="11.0" layoutY="175.0" text="Activities" />
+                              <Label fx:id="description_tf" layoutX="108.0" layoutY="175.0" text="Description" />
+                              <Label fx:id="study_tf" layoutX="111.0" layoutY="21.0" text="Study" />
+                              <Label fx:id="institute_tf" layoutX="110.0" layoutY="48.0" text="Institute" />
+                              <Label fx:id="startedDate_tf" layoutX="109.0" layoutY="79.0" text="Started Date" />
+                              <Label fx:id="finishedDate_tf" layoutX="109.0" layoutY="99.0" text="Finished Date" />
+                              <Label fx:id="grade_tf" layoutX="109.0" layoutY="126.0" text="Grade" />
+                              <AnchorPane layoutX="230.0" prefHeight="251.0" prefWidth="142.0">
+                                 <children>
+                                    <Label fx:id="dialougeTitle" alignment="CENTER" contentDisplay="CENTER" layoutX="8.0" layoutY="14.0" maxWidth="1.7976931348623157E308" prefHeight="18.0" prefWidth="148.0" textAlignment="CENTER" />
+                                    <TextArea fx:id="dialouge_tf" editable="false" focusTraversable="false" layoutX="22.0" layoutY="47.2" prefHeight="204.0" prefWidth="139.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="47.0">
+                                       <padding>
+                                          <Insets bottom="6.0" left="7.0" right="6.0" top="6.0" />
+                                       </padding>
+                                    </TextArea>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </AnchorPane>
                      </children>
                   </HBox>
                </children></AnchorPane>

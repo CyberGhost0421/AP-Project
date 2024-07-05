@@ -3,11 +3,9 @@ package DBaccess;
 import Models.Education;
 import Models.User;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Date;
+import java.sql.*;
+import java.util.ArrayList;
+
 
 public class EducationDB {
 

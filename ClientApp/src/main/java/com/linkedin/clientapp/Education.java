@@ -106,7 +106,7 @@ public class Education {
                 ", institute='" + institute + '\'' +
                 ", study='" + study + '\'' +
                 ", startedDate='" + startedDate + '\'' +
-                ", finishedDate=" + finishedDate + ':' +
+                ", finishedDate='" + finishedDate + '\'' +
                 ", grade='" + grade + '\'' +
                 ", activities='" + activities + '\'' +
                 ", description='" + description + '\'' +

@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.ImagePattern;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -23,6 +24,9 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -37,6 +41,15 @@ public class ProfileController implements Initializable {
 
     @FXML
     private ToggleButton Follow_bt;
+    @FXML
+    private Label dialougeTitle;
+    @FXML
+    private Label activities_tf;
+
+    @FXML
+    private Label description_tf;
+    @FXML
+    private TextArea dialouge_tf;
 
     @FXML
     private Label FullName_tf;
@@ -45,13 +58,31 @@ public class ProfileController implements Initializable {
     private Button Profile_bt;
 
     @FXML
+    private TextArea detail_tf;
+
+    @FXML
+    private Label finishedDate_tf;
+
+    @FXML
     private Label followers_tf;
 
     @FXML
     private Label followings_tf;
 
     @FXML
+    private Label grade_tf;
+
+    @FXML
+    private AnchorPane education_anchor;
+
+    @FXML
     private Button home_bt;
+
+    @FXML
+    private ImageView image_view;
+
+    @FXML
+    private Label institute_tf;
 
     @FXML
     private Button logout_bt;
@@ -66,15 +97,19 @@ public class ProfileController implements Initializable {
     private Button search_bt;
 
     @FXML
-    private Label username_tf;
+    private ListView skillListView;
+
     @FXML
-    private ImageView image_view;
+    private Label startedDate_tf;
+
     @FXML
-    private TextArea detail_tf;
+    private Label study_tf;
+
     @FXML
     private TextField title_tf;
+
     @FXML
-    private ListView skillListView;
+    private Label username_tf;
 
     String selectedTitle;
 
@@ -107,7 +142,7 @@ public class ProfileController implements Initializable {
                     public void handle(MouseEvent event) {
                         selectedTitle = skillListView.getSelectionModel().getSelectedItem().toString();
                         try {
-                            Skill skillSelected = skillGetter(thisuser.getId(),selectedTitle);
+                            Skill skillSelected = skillGetter(thisuser.getId(), selectedTitle);
                             detail_tf.setText(skillSelected.getSkillDetail());
                             title_tf.setText(selectedTitle);
                             title_tf.setVisible(true);
@@ -118,6 +153,10 @@ public class ProfileController implements Initializable {
                         }
                     }
                 });
+                dialouge_tf.setVisible(false);
+                dialougeTitle.setVisible(false);
+
+                setEducationToProf(thisuser.getId());
 
 //            profile_img.path
             } else {
@@ -143,7 +182,7 @@ public class ProfileController implements Initializable {
                     public void handle(MouseEvent event) {
                         selectedTitle = skillListView.getSelectionModel().getSelectedItem().toString();
                         try {
-                            Skill skillSelected = skillGetter(search_bt.getId(),selectedTitle);
+                            Skill skillSelected = skillGetter(searchedUser.getId(), selectedTitle);
                             detail_tf.setText(skillSelected.getSkillDetail());
                             title_tf.setText(selectedTitle);
                             title_tf.setVisible(true);
@@ -155,6 +194,8 @@ public class ProfileController implements Initializable {
                     }
                 });
 
+                setEducationToProf(searchedUser.getId());
+
 //            profile_img.path
 
             }
@@ -162,6 +203,7 @@ public class ProfileController implements Initializable {
             System.out.println("Unable to get user Data");
         }
     }
+
     private void setAction() {
         message_bt.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -177,7 +219,8 @@ public class ProfileController implements Initializable {
         });
         image_view.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
-            public void handle(MouseEvent mouseEvent) {}
+            public void handle(MouseEvent mouseEvent) {
+            }
         });
         Follow_bt.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -517,6 +560,74 @@ public class ProfileController implements Initializable {
         Skill skill = new Skill(obj.getString("id"), obj.getString("skillTitle"), obj.getString("skillDetail"));
         return skill;
     }
+
+    public void setEducationToProf(String id) throws IOException {
+        Education thisEducation = getEducation(id);
+        if (thisEducation != null) {
+            study_tf.setText(thisEducation.getStudy());
+            institute_tf.setText(thisEducation.getInstitute());
+            grade_tf.setText(thisEducation.getGrade());
+//                activities_tf.setText(thisEducation.getActivities());
+//                description_tf.setText(thisEducation.getDescription());
+            SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
+
+            finishedDate_tf.setText(sdf.format(thisEducation.getFinishedDate()));
+            startedDate_tf.setText(sdf.format(thisEducation.getStartedDate()));
+            education_anchor.setVisible(true);
+
+            activities_tf.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    dialouge_tf.setVisible(true);
+                    dialougeTitle.setVisible(true);
+                    dialougeTitle.setText("Education Activities");
+                    dialouge_tf.setText(thisEducation.getActivities());
+                }
+            });
+            description_tf.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    dialouge_tf.setVisible(true);
+                    dialougeTitle.setVisible(true);
+                    dialougeTitle.setText("Education Description");
+                    dialouge_tf.setText(thisEducation.getDescription());
+
+                }
+            });
+
+        } else {
+            education_anchor.setVisible(false);
+        }
+    }
+
+    public Education getEducation(String id) throws IOException {
+        try {
+            URL url = new URL("http://localhost:8080/users/" + id + "/educations");
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+            int responseCode = con.getResponseCode();
+            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            String inputline;
+            StringBuffer response1 = new StringBuffer();
+            while ((inputline = in.readLine()) != null) {
+                response1.append(inputline);
+            }
+            in.close();
+            String response = response1.toString();
+            System.out.println(response);  /////
+            if (!response.equals("No Education")) {
+                JSONObject obj = new JSONObject(response);
+                Education education = new Education(obj.getString("id"), obj.getString("institute"), obj.getString("study"), new java.sql.Date(obj.getLong("startedDate")), new java.sql.Date(obj.getLong("finishedDate")), obj.getString("grade"), obj.getString("activities"), obj.getString("description"));
+
+                return education;
+            }
+            return null;
+        } catch (ConnectException e) {
+            return null;
+//            return new Education("", "", "", null, null, "", "", "");
+        }
+    }
+
 
     public static String[] toStringArray(JSONArray array) {
         if (array == null)

@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
 
-//import java.sql.Date;
-
 public class User {
     @JsonProperty("id")
     private String id;

@@ -131,6 +131,59 @@
                         </HBox>
                      </content>
                 </Tab>
+                  <Tab text="Education">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <HBox alignment="CENTER" layoutX="200.0" layoutY="92.0" prefHeight="283.2" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="15.0">
+                                       <children>
+                                          <Label text="Study" />
+                                          <Label text="Institute" />
+                                          <Label text="Started Date" />
+                                          <Label text="Finished Date" />
+                                          <Label text="Grade" />
+                                       </children>
+                                    </VBox>
+                                    <VBox alignment="CENTER" prefHeight="283.0" prefWidth="142.0" spacing="8.0">
+                                       <children>
+                                          <TextField fx:id="study_tf" />
+                                          <TextField fx:id="institute_tf" />
+                                          <TextField fx:id="startedDate_tf" />
+                                          <TextField fx:id="finishedDate_tf" />
+                                          <TextField fx:id="grade_tf" promptText="dd-mm-yyyy" />
+                                       </children>
+                                    </VBox>
+                                    <VBox alignment="CENTER" prefHeight="283.0" prefWidth="190.0">
+                                       <children>
+                                          <TextArea fx:id="activities_tf" prefHeight="200.0" prefWidth="200.0" promptText="Activities">
+                                             <padding>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </padding>
+                                          </TextArea>
+                                          <TextArea fx:id="description_tf" prefHeight="200.0" prefWidth="200.0" promptText="Description">
+                                             <VBox.margin>
+                                                <Insets />
+                                             </VBox.margin>
+                                             <padding>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </padding>
+                                          </TextArea>
+                                       </children>
+                                       <HBox.margin>
+                                          <Insets left="50.0" top="8.0" />
+                                       </HBox.margin>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
                   <Tab text="Skills">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
