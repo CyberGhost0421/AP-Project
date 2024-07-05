@@ -1,0 +1,105 @@
+/* Search.css */
+
+/* Body background color */
+.root {
+    -fx-background-color: #f0f5f5; /* Light blue-gray background */
+}
+
+/* Top bar styling */
+.top-bar {
+    -fx-background-color: #1d9bf0; /* Even lighter LinkedIn blue */
+    -fx-padding: 10px;
+}
+
+.top-button {
+    -fx-text-fill: white; /* White text color */
+    -fx-font-weight: bold; /* Bold font */
+    -fx-background-color: transparent; /* Transparent background */
+    -fx-border-color: transparent; /* Transparent border */
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.4) , 10, 0.0 , 0 , 1 );
+}
+
+.top-button:hover {
+    -fx-background-color: #0066b2; /* Darker blue background on hover */
+}
+
+/* Search bar styling */
+.search-bar {
+    -fx-spacing: 10px;
+    -fx-padding: 10px;
+    -fx-background-color: #ffffff; /* White background */
+    -fx-border-color: #ddd; /* Light gray border */
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+}
+
+.search-field {
+    -fx-prompt-text-fill: #aaa; /* Light gray prompt text color */
+    -fx-background-color: #f0f5f5; /* Light blue-gray background */
+    -fx-border-color: transparent; /* Transparent border */
+    -fx-border-radius: 5px;
+    -fx-padding: 5px;
+}
+
+.search-button {
+    -fx-text-fill: white; /* White text color */
+    -fx-font-weight: bold; /* Bold font */
+    -fx-background-color: #1d9bf0; /* Even lighter LinkedIn blue */
+    -fx-border-color: transparent; /* Transparent border */
+    -fx-border-radius: 5px;
+    -fx-padding: 8px 15px;
+}
+
+.search-button:hover {
+    -fx-background-color: #0066b2; /* Darker blue background on hover */
+}
+
+/* HBox styling */
+.h-box {
+    -fx-background-color: linear-gradient(to bottom, #1d9bf0, #1598ff); /* Gradient background */
+    -fx-padding: 10px;
+    -fx-background-radius: 5px;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.2) , 10, 0.0 , 0 , 1 );
+}
+
+/* ListView styling */
+.list-view .list-cell {
+    -fx-background-color: #ffffff; /* White background */
+    -fx-padding: 10px;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-background-radius: 0;
+}
+
+.list-view .list-cell:selected {
+    -fx-background-color: #1d9bf0; /* Selected item background color */
+    -fx-text-fill: white; /* Selected item text color */
+}
+
+/* ScrollBar styling */
+.scroll-bar:vertical {
+    -fx-background-color: #f0f5f5; /* Light blue-gray background */
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #1d9bf0; /* Even lighter LinkedIn blue */
+}
+
+.scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #0066b2; /* Darker blue background on hover */
+}
+
+.scroll-bar:vertical .track {
+    -fx-background-color: #ffffff; /* White background */
+}
+
+.scroll-bar:vertical .increment-button,
+.scroll-bar:vertical .decrement-button {
+    -fx-background-color: transparent; /* Transparent background for buttons */
+    -fx-background-insets: 0;
+}
+
+.scroll-bar:vertical .increment-arrow,
+.scroll-bar:vertical .decrement-arrow {
+    -fx-background-color: #1d9bf0; /* Even lighter LinkedIn blue */
+    -fx-shape: "M 0 0 L 5 5 L 10 0 Z"; /* Custom shape for arrows */
+}

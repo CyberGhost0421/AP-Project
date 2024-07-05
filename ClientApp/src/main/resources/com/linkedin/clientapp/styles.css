@@ -1,0 +1,36 @@
+/* LinkedIn-like CSS theme */
+
+/* Body background color */
+.root {
+    -fx-background-color: #f0f5f5; /* Light blue-gray background */
+}
+
+/* Top bar styling */
+.top-bar {
+    -fx-background-color: #1d9bf0; /* Even lighter LinkedIn blue */
+    -fx-padding: 10px;
+}
+
+.top-button {
+    -fx-text-fill: white; /* White text color */
+    -fx-font-weight: bold; /* Bold font */
+    -fx-background-color: transparent; /* Transparent background */
+    -fx-border-color: transparent; /* Transparent border */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 10, 0.0, 0, 1);
+}
+
+.top-button:hover {
+    -fx-background-color: #0066b2; /* Darker blue background on hover */
+}
+
+/* Profile Pane styling */
+.profile-pane {
+    -fx-background-color: #dceff5; /* Light blue background */
+    -fx-padding: 10px;
+}
+
+/* Content Pane styling */
+.content-pane {
+    -fx-background-color: #bae7f5; /* Lighter blue background */
+    -fx-padding: 10px;
+}

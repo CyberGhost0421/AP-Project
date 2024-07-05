@@ -1,0 +1,58 @@
+/* SignUp.css */
+
+/* Root styling */
+.main-pane {
+    -fx-background-color: #f0f5f5; /* Light blue-gray background */
+}
+
+/* Labels styling */
+.label {
+    -fx-text-fill: #555; /* Dark gray text color */
+}
+
+/* TextFields and PasswordFields styling */
+.text-field,
+.password-field {
+    -fx-background-color: #ffffff; /* White background */
+    -fx-border-color: #ddd; /* Light gray border */
+    -fx-border-width: 1px;
+    -fx-border-radius: 3px;
+    -fx-padding: 5px;
+}
+
+/* ComboBox styling */
+.combo-box {
+    -fx-background-color: #ffffff; /* White background */
+    -fx-border-color: #ddd; /* Light gray border */
+    -fx-border-width: 1px;
+    -fx-border-radius: 3px;
+    -fx-padding: 5px;
+}
+
+/* DatePicker styling */
+.date-picker {
+    -fx-background-color: #ffffff; /* White background */
+    -fx-border-color: #ddd; /* Light gray border */
+    -fx-border-width: 1px;
+    -fx-border-radius: 3px;
+    -fx-padding: 5px;
+}
+
+/* Button styling */
+.button {
+    -fx-text-fill: white; /* White text color */
+    -fx-font-weight: bold; /* Bold font */
+    -fx-background-color: #1d9bf0; /* LinkedIn blue */
+    -fx-border-color: transparent; /* Transparent border */
+    -fx-border-radius: 3px;
+    -fx-padding: 8px 15px;
+}
+
+.button:hover {
+    -fx-background-color: #0066b2; /* Darker blue background on hover */
+}
+
+/* Hyperlink styling */
+.hyperlink {
+    -fx-text-fill: #009dff; /* Blue text color */
+}
